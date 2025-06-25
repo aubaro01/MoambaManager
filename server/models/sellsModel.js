@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const productSchema = require("./productsModel"); 
 
-const sellsSchema = new mongoose.Schema({ 
+const sellsSchema = new mongoose.Schema({
     vendidoEm: {
         type: Date,
         default: Date.now,
@@ -10,11 +9,32 @@ const sellsSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    clientDados: { 
+    clientDados: {
         type: String,
         required: false,
-    }, 
-    products: [productSchema]
+    },
+    products: [
+        {
+            product: { 
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "produtos",
+                required: true
+            },
+            NomeProduct: {
+                type: String,
+                required: true
+            },
+            quantidade: {
+                type: Number,
+                required: true,
+                min: 1
+            },
+            precoUnitario: {
+                type: Number,
+                required: true
+            }
+        }
+    ]
 });
 
 const Sells = mongoose.model("vendas", sellsSchema);
