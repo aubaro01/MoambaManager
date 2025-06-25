@@ -14,7 +14,7 @@ const sellsSchema = new mongoose.Schema({
         type: String,
         required: false,
     }, 
-     products: [productSchema]
+    products: [productSchema]
 });
 
 const Sells = mongoose.model("vendas", sellsSchema);
