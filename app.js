@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require('cors');
 const authRoute = require("./server/routes/userRoute");
-
+const productRoute = require("./server/routes/productRoute");
 const app = express();
 require('dotenv').config(); 
 
@@ -22,6 +22,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 // Rotas
 app.use("/api/v1", authRoute)
+app.use("/api/v1", productRoute)
 
 
 // Rota para ver a app está on
