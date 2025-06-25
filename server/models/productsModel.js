@@ -12,7 +12,7 @@ const productSchema = new mongoose.Schema({
     },
     peso:{
         type: String,
-        required: trusted,
+        required: true,
     },
     descricao:{
         type: String,
