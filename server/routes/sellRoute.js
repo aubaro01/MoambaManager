@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Sells = require('../models/sellsModel');
 const Product = require('../models/productsModel');
-const sellsController = require('../controllers/sellsController');
+const sellsController = require('../controller/sellController');
 
 router.post('/sells', sellsController.createSell);
 
