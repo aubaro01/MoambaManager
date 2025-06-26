@@ -1,5 +1,6 @@
 const Sells = require('../models/sellsModel');
 const Product = require('../models/productsModel');
+const paginatedResponse = require("../utils/paginationResponse");
 
 exports.createSell = async (req, res) => {
   try {
@@ -44,8 +45,17 @@ exports.createSell = async (req, res) => {
 
 exports.getAllSells = async (req, res) => {
   try {
-    const vendas = await Sells.find().populate('products.product');
-    res.json(vendas);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const total = await Sells.countDocuments();
+    const vendas = await Sells.find()
+      .skip(skip)
+      .limit(limit)
+      .populate('products.product');
+
+    res.json(paginatedResponse({ data: vendas, total, page, limit }));
   } catch (error) {
     res.status(500).json({ message: 'Erro ao listar vendas', error });
   }
@@ -76,14 +86,21 @@ exports.getSellsByDate = async (req, res) => {
       return res.status(400).json({ message: 'Datas inválidas.' });
     }
 
-    // Ajusta o fim do dia para incluir todas as vendas do endDate
     end.setHours(23, 59, 59, 999);
 
-    const vendas = await Sells.find({
-      vendidoEm: { $gte: start, $lte: end }
-    }).populate('products.product');
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
 
-    res.json(vendas);
+    const filter = { vendidoEm: { $gte: start, $lte: end } };
+
+    const total = await Sells.countDocuments(filter);
+    const vendas = await Sells.find(filter)
+      .skip(skip)
+      .limit(limit)
+      .populate('products.product');
+
+    res.json(paginatedResponse({ data: vendas, total, page, limit }));
   } catch (error) {
     console.error('Erro ao buscar vendas por data:', error);
     res.status(500).json({ message: 'Erro interno ao buscar vendas por data', error });

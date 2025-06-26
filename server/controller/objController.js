@@ -1,4 +1,6 @@
-const objModel = require ("../models/objModel");
+const objModel = require("../models/objModel");
+const paginatedResponse = require("../utils/paginationResponse");
+
 
 exports.criarObjetivo = async (req, res) => {
   try {
@@ -19,8 +21,14 @@ exports.criarObjetivo = async (req, res) => {
 
 exports.listarObjetivos = async (req, res) => {
   try {
-    const objetivos = await objModel.find();
-    res.json(objetivos);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const total = await objModel.countDocuments();
+    const data = await objModel.find().skip(skip).limit(limit);
+
+    res.json(paginatedResponse({ data, total, page, limit }));
   } catch (err) {
     res.status(500).json({ erro: "Erro ao buscar objetivos." });
   }
@@ -29,18 +37,22 @@ exports.listarObjetivos = async (req, res) => {
 exports.getObjetivoPorMes = async (req, res) => {
   try {
     const { mes } = req.query;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
 
     if (!mes) {
       return res.status(400).json({ erro: "O parâmetro 'mes' é obrigatório." });
     }
 
-    const objetivos = await Objetivo.find({ mes: mes });
+    const total = await objModel.countDocuments({ mes });
+    const data = await objModel.find({ mes }).skip(skip).limit(limit);
 
-    if (objetivos.length === 0) {
+    if (data.length === 0) {
       return res.status(404).json({ mensagem: "Nenhum objetivo encontrado para esse mês." });
     }
 
-    res.json(objetivos);
+    res.json(paginatedResponse({ data, total, page, limit }));
   } catch (err) {
     res.status(500).json({ erro: "Erro ao buscar objetivo por mês.", detalhes: err.message });
   }
