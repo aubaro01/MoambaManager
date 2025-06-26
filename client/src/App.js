@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Mainpage from "./pages/main";
 
