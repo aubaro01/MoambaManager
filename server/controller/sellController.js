@@ -61,6 +61,35 @@ exports.getSellById = async (req, res) => {
   }
 };
 
+exports.getSellsByDate = async (req, res) => {
+  try {
+    const { startDate, endDate } = req.query;
+
+    if (!startDate || !endDate) {
+      return res.status(400).json({ message: 'Por favor, informe startDate e endDate no formato ISO.' });
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (isNaN(start) || isNaN(end)) {
+      return res.status(400).json({ message: 'Datas inválidas.' });
+    }
+
+    // Ajusta o fim do dia para incluir todas as vendas do endDate
+    end.setHours(23, 59, 59, 999);
+
+    const vendas = await Sells.find({
+      vendidoEm: { $gte: start, $lte: end }
+    }).populate('products.product');
+
+    res.json(vendas);
+  } catch (error) {
+    console.error('Erro ao buscar vendas por data:', error);
+    res.status(500).json({ message: 'Erro interno ao buscar vendas por data', error });
+  }
+};
+
 exports.updateSell = async (req, res) => {
   // Atenção: essa função **não ajusta o estoque automaticamente**.
   try {
