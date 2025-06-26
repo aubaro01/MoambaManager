@@ -26,7 +26,7 @@ const productRoute = require("./routes/productRoute");
 app.use("/api/v1", productRoute);
 
 const sellsRoute = require("./routes/sellRoute");
-app.use("/api/v1/", sellsRoute);
+app.use("/api/v1", sellsRoute);
 
 const objRoute = require("./routes/objRoute");
 app.use("/api/v1", objRoute);
