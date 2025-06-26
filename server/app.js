@@ -1,16 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require('cors');
-const authRoute = require("./server/routes/userRoute");
-const productRoute = require("./server/routes/productRoute");
-const sellsRoute = require("./server/routes/sellRoute");
 const app = express();
 require('dotenv').config(); 
 
-app.use(express.json()); 
+app.use(express.json());
 
 app.use(cors({
-  origin: process.env. REACT_APP_API_URL
+  origin: process.env.REACT_APP_API_URL
 }));
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,15 +19,22 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   });
 
 // Rotas
-app.use("/api/v1", authRoute)
-app.use("/api/v1", productRoute)
-app.use("/api/v1/", sellsRoute)
+const authRoute = require("./routes/userRoute");
+app.use("/api/v1", authRoute);
 
-// Rota para ver a app está on
+const productRoute = require("./routes/productRoute");
+app.use("/api/v1", productRoute);
+
+const sellsRoute = require("./routes/sellRoute");
+app.use("/api/v1/", sellsRoute);
+
+// Rota para ver se a API está on
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'API online!!' });
 });
 
-module.exports = (req, res) => {
-  app(req, res);  
-};
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});

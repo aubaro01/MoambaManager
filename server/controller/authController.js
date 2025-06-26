@@ -1,10 +1,10 @@
-const User = require ("../models/userModel");
+const jwt = require("jsonwebtoken");
+const User = require("../models/userModel");
 
 const register = async (req, res) => {
     const { nome, logName, password } = req.body;
 
     try {
-        // Verifica se logName já existe
         const existingUser = await User.findOne({ logName });
         if (existingUser) {
             return res.status(400).json({ message: "Nome de login já está em uso." });
@@ -15,12 +15,12 @@ const register = async (req, res) => {
 
         res.status(201).json({ message: "Utilizador registrado com sucesso!" });
     } catch (err) {
-        res.status(500).json({ error: "Erro ao registrar utilizador." });
+        console.error('Erro ao registrar utilizador:', err);
+        res.status(500).json({ error: "Erro ao registrar utilizador.", details: err.message });
+
     }
 };
 
-
-// Login do usuário
 const login = async (req, res) => {
     const { logName, password } = req.body;
 
@@ -35,8 +35,21 @@ const login = async (req, res) => {
             return res.status(401).json({ message: "Senha incorreta." });
         }
 
-        // gerar token JWT
-        res.status(200).json({ message: "Login bem-sucedido!", userId: user._id });
+        const token = jwt.sign(
+            { id: user._id, logName: user.logName },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN || '2h' }
+        );
+
+        res.status(200).json({
+            message: "Login bem-sucedido!",
+            token,
+            user: {
+                id: user._id,
+                nome: user.nome,
+                logName: user.logName
+            }
+        });
     } catch (err) {
         res.status(500).json({ error: "Erro no login." });
     }
