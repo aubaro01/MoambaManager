@@ -28,6 +28,10 @@ const productSchema = new mongoose.Schema({
     criadoEm: {
         type: Date,
         default: Date.now,
+    },
+    EditadoEm: {
+        type: Date,
+        default: Date.now,
     }
 });
 
