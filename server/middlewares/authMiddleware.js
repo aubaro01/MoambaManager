@@ -15,7 +15,6 @@ const verifyToken = (req, res, next) => {
         next();
     } catch (err) {
         console.log("Token recebido:", token);
-        console.log(process.env.JWT_SECRET)
         return res.status(401).json({ message: "Token inválido ou expirado." });
     }
 };
