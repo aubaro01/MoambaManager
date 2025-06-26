@@ -4,9 +4,11 @@ const Sells = require('../models/sellsModel');
 const Product = require('../models/productsModel');
 const sellsController = require('../controller/sellController');
 
-router.post('/sells', sellsController.createSell);
+const verifyToken = require('../middlewares/authMiddleware');
 
-router.get('/sells', async (req, res) => {
+router.post('/sells', verifyToken, sellsController.createSell);
+
+router.get('/sells', verifyToken, async (req, res) => {
   try {
     const vendas = await Sells.find().populate('products.product');
     res.json(vendas);
@@ -15,7 +17,7 @@ router.get('/sells', async (req, res) => {
   }
 });
 
-router.get('/sells/:id', async (req, res) => {
+router.get('/sells/:id', verifyToken, async (req, res) => {
   try {
     const venda = await Sells.findById(req.params.id).populate('products.product');
     if (!venda) return res.status(404).json({ message: 'Venda não encontrada' });
@@ -25,7 +27,7 @@ router.get('/sells/:id', async (req, res) => {
   }
 });
 
-router.put('/sells/:id', async (req, res) => {
+router.put('/sells/:id', verifyToken, async (req, res) => {
   try {
     const vendaAtualizada = await Sells.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!vendaAtualizada) return res.status(404).json({ message: 'Venda não encontrada' });
@@ -35,7 +37,7 @@ router.put('/sells/:id', async (req, res) => {
   }
 });
 
-router.delete('/sells/:id', async (req, res) => {
+router.delete('/sells/:id', verifyToken, async (req, res) => {
   try {
     const vendaDeletada = await Sells.findByIdAndDelete(req.params.id);
     if (!vendaDeletada) return res.status(404).json({ message: 'Venda não encontrada' });

@@ -8,12 +8,15 @@ const {
   updateProduct
 } = require("../controller/productController");
 
-// Rotas para os produtos
-router.post("/product", createProduct);
-router.get("/product/:id", getProductById);
-router.delete("/product/:id", deleteProduct);
-router.put("/product/:id", updateProduct);
+const verifyToken = require("../middlewares/authMiddleware");
 
+// Rotas protegidas
+router.post("/product", verifyToken, createProduct);
+router.delete("/product/:id", verifyToken, deleteProduct);
+router.put("/product/:id", verifyToken, updateProduct);
+
+// Rotas públicas
 router.get("/products", getAllProducts);
+router.get("/product/:id", getProductById);
 
 module.exports = router;

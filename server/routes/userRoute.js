@@ -5,6 +5,6 @@ const {register, login} = require("../controller/authController");
 // Rotas para registro e auth do user
 
 router.post("/user", register);
-router.get("/login", login);
+router.post("/login", login);
 
 module.exports = router;

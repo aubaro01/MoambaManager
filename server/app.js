@@ -1,9 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require('cors');
-const authRoute = require("./routes/userRoute");
-const productRoute = require("./routes/productRoute");
-const sellsRoute = require("./routes/sellRoute");
 const app = express();
 require('dotenv').config(); 
 
@@ -22,9 +19,14 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   });
 
 // Rotas
-app.use("/api/v1", authRoute)
-app.use("/api/v1", productRoute)
-app.use("/api/v1/", sellsRoute)
+const authRoute = require("./routes/userRoute");
+app.use("/api/v1", authRoute);
+
+const productRoute = require("./routes/productRoute");
+app.use("/api/v1", productRoute);
+
+const sellsRoute = require("./routes/sellRoute");
+app.use("/api/v1/", sellsRoute);
 
 // Rota para ver se a API está on
 app.get('/', (req, res) => {
