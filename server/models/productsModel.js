@@ -11,11 +11,13 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     peso: {
-        type: String,
+        type: Number,
         required: true,
+         min: 1,
     },
     pesoTipo: {
         type: String,
+        enum: ["KG", "LT", "Gr", "Uni"],
         required: true,
     },
     descricao: {
@@ -23,7 +25,9 @@ const productSchema = new mongoose.Schema({
         required: false,
     },
     categoria: {
-        type: String
+        type: String,
+        enum: ["alimentar", "bebidas", "não comestivel"],
+        required: true
     },
     criadoEm: {
         type: Date,

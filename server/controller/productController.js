@@ -1,60 +1,67 @@
 const Product = require("../models/productsModel");
+const paginatedResponse = require("../utils/paginationResponse");
 
 exports.createProduct = async (req, res) => {
-    try {
-        const newProduct = new Product(req.body); 
-        const savedProduct = await newProduct.save(); 
-        res.status(201).json(savedProduct);
-    } catch (error) {
-        res.status(400).json({ message: 'Erro ao criar produto', error });
-    }
+  try {
+    const newProduct = new Product(req.body); 
+    const savedProduct = await newProduct.save(); 
+    res.status(201).json(savedProduct);
+  } catch (error) {
+    res.status(400).json({ message: "Erro ao criar produto", error });
+  }
 };
 
 exports.getAllProducts = async (req, res) => {
-    try {
-        const products = await Product.find();
-        res.json(products);
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao procurar por produtos', error });
-    }
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const total = await Product.countDocuments();
+    const data = await Product.find().skip(skip).limit(limit);
+
+    res.json(paginatedResponse({ data, total, page, limit }));
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao procurar por produtos", error });
+  }
 };
 
 exports.getProductById = async (req, res) => {
-    try {
-        const product = await Product.findById(req.params.id); 
-        if (!product) {
-            return res.status(404).json({ message: 'Produto não encontrado' });
-        }
-        res.json(product);
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao procurar por produto', error });
+  try {
+    const product = await Product.findById(req.params.id); 
+    if (!product) {
+      return res.status(404).json({ message: "Produto não encontrado" });
     }
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao procurar por produto", error });
+  }
 };
 
 exports.updateProduct = async (req, res) => {
-    try {
-        const updatedProduct = await Product.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true }
-        );
-        if (!updatedProduct) {
-            return res.status(404).json({ message: 'Produto não encontrado' });
-        }
-        res.json(updatedProduct);
-    } catch (error) {
-        res.status(400).json({ message: 'Erro ao atualizar produto', error });
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Produto não encontrado" });
     }
+    res.json(updatedProduct);
+  } catch (error) {
+    res.status(400).json({ message: "Erro ao atualizar produto", error });
+  }
 };
 
 exports.deleteProduct = async (req, res) => {
-    try {
-        const deletedProduct = await Product.findByIdAndDelete(req.params.id);
-        if (!deletedProduct) {
-            return res.status(404).json({ message: 'Produto não encontrado' });
-        }
-        res.json({ message: 'Produto deletado com sucesso' });
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao deletar produto', error });
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Produto não encontrado" });
     }
+    res.json({ message: "Produto deletado com sucesso" });
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao deletar produto", error });
+  }
 };
