@@ -2,8 +2,6 @@ import React, { useState, useRef } from "react";
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { Dialog } from "primereact/dialog";
-import Footer from "../components/Footer/footer";
-import LoginForm from "../components/Form/LoginForm";
 
 export default function LandingPage() {
   const [loading, setLoading] = useState(false);
@@ -126,11 +124,9 @@ export default function LandingPage() {
               <h1 className="text-2xl font-bold mb-1">Bem-vindo(a) de volta!</h1>
               <p className="opacity-90">Por favor, faça login para continuar</p>
             </div>
-            <LoginForm onLogin={handleLogin} loading={loading} />
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

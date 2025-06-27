@@ -2,14 +2,39 @@ import React, { useState } from "react";
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
+import { api } from "../../services/api";
+import { useNavigate } from 'react-router-dom';
 
-const LoginForm = ({ onLogin, loading }) => {
-  const [logname, setLogName] = useState('');
+const LoginForm = () => {
+  const [logName, setLogName] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();  
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onLogin(logname, password);
+    await onLogin(logName, password);
+  };
+
+  const onLogin = async (logName, password) => {
+    setLoading(true);
+    try {
+      const response = await api.post('/user/login', { logName, password });
+
+      const { token } = response.data;
+      localStorage.setItem('jwt_token', token);
+
+      alert('Login realizado com sucesso!');
+      setLogName('');
+      setPassword('');
+
+      navigate('/dashboard');  
+    } catch (error) {
+      alert('Erro no login: ' + (error.response?.data?.message || error.message));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -24,7 +49,7 @@ const LoginForm = ({ onLogin, loading }) => {
             <InputText
               id="logname"
               type="text"
-              value={logname}
+              value={logName}
               onChange={(e) => setLogName(e.target.value)}
               placeholder="Teste12323"
               required
@@ -46,7 +71,7 @@ const LoginForm = ({ onLogin, loading }) => {
               onChange={(e) => setPassword(e.target.value)}
               feedback={false}
               toggleMask
-              placeholder=" Digite sua senha"
+              placeholder="Digite sua senha"
               required
               inputClassName="w-full"
               inputStyle={{ border: 'none', borderBottom: '1px solid #ced4da' }}
