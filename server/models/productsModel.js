@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema({
     peso: {
         type: Number,
         required: true,
-         min: 1,
+        min: 1,
     },
     pesoTipo: {
         type: String,
@@ -32,11 +32,24 @@ const productSchema = new mongoose.Schema({
     criadoEm: {
         type: Date,
         default: Date.now,
+        immutable: true
     },
     EditadoEm: {
         type: Date,
         default: Date.now,
     }
+});
+
+productSchema.pre("save", function (next) {
+    if (!this.isNew) {
+        this.EditadoEm = Date.now();
+    }
+    next();
+});
+
+productSchema.pre("findOneAndUpdate", function (next) {
+    this.set({ EditadoEm: Date.now() });
+    next();
 });
 
 const product = mongoose.model("produtos", productSchema);
