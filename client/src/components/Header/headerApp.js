@@ -5,10 +5,10 @@ export default function HeaderApp() {
     <header className="bg-dark text-white py-4 shadow-sm">
       <div className="container text-center">
         <h1 className="fw-bold mb-1" style={{ letterSpacing: "2px" }}>
-          Moamba Manager
+            MoaGes
         </h1>
         <p className="lead text-secondary mb-0">
-          Uma webApp para gestão
+          MoaGes
         </p>
         <hr
           className="mx-auto mt-3"
