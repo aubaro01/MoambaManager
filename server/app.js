@@ -1,13 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require('cors');
+require('dotenv').config();
+
 const app = express();
-require('dotenv').config(); 
 
 app.use(express.json());
 
 app.use(cors({
-  origin: process.env.REACT_APP_API_URL
+  origin: process.env.FRONTEND_ORIGIN,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -18,7 +21,6 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
     console.error('Erro ao conectar ao MongoDB:', err);
   });
 
-// Rotas
 const authRoute = require("./routes/userRoute");
 app.use("/api/v1", authRoute);
 
@@ -31,12 +33,10 @@ app.use("/api/v1", sellsRoute);
 const objRoute = require("./routes/objRoute");
 app.use("/api/v1", objRoute);
 
-// Rota para ver se a API está on
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'API online!!' });
 });
 
-
 module.exports = (req, res) => {
-  app(req, res);  
+  app(req, res);
 };
