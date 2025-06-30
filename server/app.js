@@ -1,19 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require('cors');
-require('dotenv').config();
+const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 
 app.use(express.json());
 
 app.use(cors({
-  origin: process.env.FRONTEND_ORIGIN,
+  origin: process.env.FRONTEND_ORIGIN || '*', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI, {
+  serverSelectionTimeoutMS: 20000 
+})
   .then(() => {
     console.log('Conectado ao MongoDB com sucesso');
   })
@@ -22,21 +24,26 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   });
 
 const authRoute = require("./routes/userRoute");
-app.use("/api/v1", authRoute);
-
 const productRoute = require("./routes/productRoute");
-app.use("/api/v1", productRoute);
-
 const sellsRoute = require("./routes/sellRoute");
-app.use("/api/v1", sellsRoute);
-
 const objRoute = require("./routes/objRoute");
+
+app.use("/api/v1", authRoute);
+app.use("/api/v1", productRoute);
+app.use("/api/v1", sellsRoute);
 app.use("/api/v1", objRoute);
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'API online!!' });
 });
 
-module.exports = (req, res) => {
-  app(req, res);
-};
+// 🟡 Exportar app para uso com serverless 
+module.exports = app;
+
+//  iniciar servidor localmente (se não for serverless)
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor a correr em http://localhost:${PORT}`);
+  });
+}
