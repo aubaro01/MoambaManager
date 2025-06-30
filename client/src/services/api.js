@@ -1,8 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'localhost:5000/api/v1',
+  baseURL: 'https://moambaserver.vercel.app/api/v1',
+  headers: {
+    'Content-Type': 'application/json',
+  }
 });
+
 
 
 api.interceptors.request.use((config) => {

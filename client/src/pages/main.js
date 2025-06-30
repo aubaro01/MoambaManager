@@ -2,46 +2,53 @@ import React, { useState, useRef } from "react";
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { Dialog } from "primereact/dialog";
+import { useNavigate } from 'react-router-dom';
 import Footer from "../components/Footer/footer";
 import LoginForm from "../components/Form/LoginForm";
+import { api } from "../services/api"; 
 
 export default function LandingPage() {
   const [loading, setLoading] = useState(false);
   const [visibleDialog, setVisibleDialog] = useState(null);
-
   const toast = useRef(null);
+  const navigate = useNavigate();
 
-  const handleLogin = (email, password) => {
+  const handleLogin = async (logName, password) => {
     setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
-      toast.current.show({
-        severity: 'success',
-        summary: 'Login realizado!',
-        detail: 'Redirecionando para o dashboard...',
-        life: 3000
+    try {
+      const response = await api.post("/user/login", {
+        logName,
+        password,
       });
-    }, 1500);
-  };
 
-  const features = [
-    {
-      icon: 'chart-line',
-      title: 'Análises',
-      description: 'Recursos avançados',
-    },
-    {
-      icon: 'shield',
-      title: 'Segurança',
-      description: 'Recursos avançados',
-    },
-    {
-      icon: 'sync',
-      title: 'Sincronização',
-      description: 'Recursos avançados',
+      if (response.status === 200) {
+        const { token } = response.data;
+        localStorage.setItem("jwt_token", token);
+
+        toast.current.show({
+          severity: "success",
+          summary: "Login realizado!",
+          detail: "Redirecionando para o dashboard...",
+          life: 3000,
+        });
+
+        setTimeout(() => navigate("/dashboard"), 2000);
+      } else {
+        throw new Error("Resposta inesperada");
+      }
+    } catch (error) {
+      const message = error.response?.data?.message || "Erro no login";
+      toast.current.show({
+        severity: "error",
+        summary: "Erro ao entrar",
+        detail: message,
+        life: 4000,
+      });
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
   return (
     <div className="min-h-screen flex flex-column bg-primary-50 surface-ground text-900">
@@ -75,7 +82,7 @@ export default function LandingPage() {
             onHide={() => setVisibleDialog(null)} 
           >
             <p className="m-0">
-              Para suporte, entre em contato pelo github: <strong>https://github.com/aubaro01</strong>
+              Para suporte, entre em contato pelo GitHub: <strong>https://github.com/aubaro01</strong>
             </p>
           </Dialog>
           <Dialog
@@ -103,20 +110,6 @@ export default function LandingPage() {
                 Gerencie suas operações com segurança e eficiência
               </p>
             </div>
-
-            <div className="mt-6 flex flex-column gap-5">
-              {features.map(({ icon, title, description }, idx) => (
-                <div key={idx} className="flex flex-column">
-                  <div className="flex align-items-center gap-3">
-                    <span className="bg-primary-100 text-primary p-2 border-round">
-                      <i className={`pi pi-${icon}`}></i>
-                    </span>
-                    <h4 className="font-bold text-900 text-lg">#{title}</h4>
-                  </div>
-                  <p className="text-600 mt-2 ml-7">{description}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
 
@@ -130,6 +123,7 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
+
       <Footer />
     </div>
   );
