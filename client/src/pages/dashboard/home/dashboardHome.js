@@ -4,24 +4,8 @@ import { Button } from 'primereact/button';
 import { Dialog } from "primereact/dialog";
 
 export default function LandingPage() {
-  const [loading, setLoading] = useState(false);
   const [visibleDialog, setVisibleDialog] = useState(null);
-
   const toast = useRef(null);
-
-  const handleLogin = (logName, password) => {
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-      toast.current.show({
-        severity: 'success',
-        summary: 'Login realizado!',
-        detail: 'Redirecionando para o dashboard...',
-        life: 3000
-      });
-    }, 1500);
-  };
 
   const features = [
     {
@@ -120,9 +104,9 @@ export default function LandingPage() {
 
         <div className="w-full md:w-6 flex justify-content-center">
           <div className="w-full max-w-30rem surface-card border-round shadow-2 overflow-hidden">
-            <div className="bg-primary p-6 text-white">
-              <h1 className="text-2xl font-bold mb-1">Bem-vindo(a) de volta!</h1>
-              <p className="opacity-90">Por favor, faça login para continuar</p>
+            <div className="bg-primary p-6 text-white flex flex-column align-items-center justify-content-center" style={{height: '100%'}}>
+              <h1 className="text-2xl font-bold mb-1">Bem-vindo(a)!</h1>
+              <p className="opacity-90 text-center">Explore o painel para acompanhar seu negócio.</p>
             </div>
           </div>
         </div>

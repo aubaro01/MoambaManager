@@ -110,7 +110,7 @@ const LoginForm = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 feedback={false}
                 toggleMask
-                placeholder="Sua password secreta"
+                placeholder="Sua password"
                 required
                 inputClassName="w-full"
                 inputStyle={{ border: 'none', borderBottom: '1px solid #ced4da' }}

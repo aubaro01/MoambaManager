@@ -7,18 +7,30 @@ import 'primeflex/primeflex.css';
 import PrivateRoute from "./services/privateRoute";
 import { PrimeReactProvider } from 'primereact/api';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Mainpage from "./pages/main";
+import LandingPage from "./pages/main";
 import Dashboard from "./pages/dashboard/home/dashboardHome";
+import Produtos from "./pages/dashboard/products/main";
+import Vendas from "./pages/dashboard/sells/main";
 
 function App() {
   return (
     <PrimeReactProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Mainpage />} />
+          <Route path="/" element={<LandingPage />} />
           {<Route path="/dashboard" element={
             <PrivateRoute>
               <Dashboard />
+            </PrivateRoute>
+          } />}
+          {<Route path="/dashboard/produtos" element={
+            <PrivateRoute>
+              <Produtos />
+            </PrivateRoute>
+          } />}
+          {<Route path="/dashboard/vendas" element={
+            <PrivateRoute>
+              <Vendas />
             </PrivateRoute>
           } />}
           {/* <Route path="*" element={<ErroPage />} /> */}
@@ -27,5 +39,4 @@ function App() {
     </PrimeReactProvider>
   );
 }
-
 export default App;
