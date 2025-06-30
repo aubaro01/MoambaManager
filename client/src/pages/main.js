@@ -4,6 +4,7 @@ import { Button } from 'primereact/button';
 import { Dialog } from "primereact/dialog";
 import Footer from "../components/Footer/footer";
 import LoginForm from "../components/Form/LoginForm";
+import logoIMG from "../styles/img/IMG_5540.PNG"
 
 export default function LandingPage() {
   const [loading, setLoading] = useState(false);
@@ -48,50 +49,50 @@ export default function LandingPage() {
       <Toast ref={toast} position="top-right" />
 
       <header className="p-3 flex justify-content-between align-items-center surface-card shadow-2">
-        <div className="flex align-items-center">
-          <div className="bg-primary p-3 border-round shadow-2">
-            <i className="pi pi-cloud text-3xl text-white"></i>
-          </div>
-          <span className="ml-3 font-bold text-xl text-primary">Moamba Manager</span>
-        </div>
-        <div>
-          <Button
-            label="Suporte"
-            icon="pi pi-question-circle"
-            className="p-button-text text-600"
-            onClick={() => setVisibleDialog("suporte")}
-          />
-          <Button
-            label="Sobre"
-            icon="pi pi-info-circle"
-            className="p-button-text ml-2 text-600"
-            onClick={() => setVisibleDialog("sobre")}
-          />
-          <Dialog
-            header="Suporte"
-            visible={visibleDialog === "suporte"} 
-            style={{ width: '50vw' }}
-            maximizable
-            onHide={() => setVisibleDialog(null)} 
-          >
-            <p className="m-0">
-              Para suporte, entre em contato pelo github: <strong>https://github.com/aubaro01</strong>
-            </p>
-          </Dialog>
-          <Dialog
-            header="Sobre o Sistema"
-            visible={visibleDialog === "sobre"}
-            style={{ width: "50vw" }}
-            maximizable
-            onHide={() => setVisibleDialog(null)}
-          >
-            <p className="m-0">
-              O <strong>Moamba Manager</strong> é uma plataforma para gerenciamento de negócios.
-              Desenvolvido com foco em segurança, desempenho e usabilidade.
-            </p>
-          </Dialog>
-        </div>
-      </header>
+  <div className="flex align-items-center">
+    <img src={logoIMG} alt="Logo" className="w-3rem h-3rem border-circle shadow-2" />
+    <span className="ml-3 font-bold text-xl text-primary">Moamba Manager</span>
+  </div>
+  
+  <div>
+    <Button
+      label="Suporte"
+      icon="pi pi-question-circle"
+      className="p-button-text text-600"
+      onClick={() => setVisibleDialog("suporte")}
+    />
+    <Button
+      label="Sobre"
+      icon="pi pi-info-circle"
+      className="p-button-text ml-2 text-600"
+      onClick={() => setVisibleDialog("sobre")}
+    />
+    <Dialog
+      header="Suporte"
+      visible={visibleDialog === "suporte"}
+      style={{ width: '50vw' }}
+      maximizable
+      onHide={() => setVisibleDialog(null)}
+    >
+      <p className="m-0">
+        Para suporte, entre em contato pelo github: <strong>https://github.com/aubaro01</strong>
+      </p>
+    </Dialog>
+    <Dialog
+      header="Sobre o Sistema"
+      visible={visibleDialog === "sobre"}
+      style={{ width: "50vw" }}
+      maximizable
+      onHide={() => setVisibleDialog(null)}
+    >
+      <p className="m-0">
+        O <strong>Moamba Manager</strong> é uma plataforma para gerenciamento de negócios.
+        Desenvolvido com foco em segurança, desempenho e usabilidade.
+      </p>
+    </Dialog>
+  </div>
+</header>
+
 
       <div className="flex flex-grow-1 flex-column md:flex-row align-items-center justify-content-center p-4 md:p-8">
         <div className="w-full md:w-6 flex justify-content-center mb-6 md:mb-0">

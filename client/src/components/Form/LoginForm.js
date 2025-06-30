@@ -14,44 +14,27 @@ const LoginForm = () => {
 
   const navigate = useNavigate();  
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!logName.trim() || !password.trim()) {
-      toast.current.show({
-        severity: 'warn',
-        summary: 'Campos obrigatórios',
-        detail: 'Preencha todos os campos',
-        life: 3000
-      });
-      return;
-    }
-  };
-
+  // Função que realiza o login via API
   const onLogin = async (logName, password) => {
-  setLoading(true);
-  try {
-
-    const response = await api.post('/user/login', { 
-      logName, 
-      password 
-    });
+    setLoading(true);
+    try {
+      const response = await api.post('/user/login', { logName, password });
 
       if (response.status === 200) {
         const { token } = response.data;
-        
+
         localStorage.setItem('jwt_token', token);
-        
+
         setLogName('');
         setPassword('');
-        
+
         toast.current.show({
           severity: 'success',
           summary: 'Login realizado!',
           detail: 'Redirecionando...',
           life: 2000
         });
-        
+
         setTimeout(() => navigate('/dashboard'), 2000);
       } else {
         throw new Error('Resposta inesperada do servidor');
@@ -61,7 +44,7 @@ const LoginForm = () => {
                            error.response?.data?.error || 
                            error.message || 
                            'Erro desconhecido';
-      
+
       toast.current.show({
         severity: 'error',
         summary: 'Falha no login',
@@ -73,14 +56,30 @@ const LoginForm = () => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!logName.trim() || !password.trim()) {
+      toast.current.show({
+        severity: 'warn',
+        summary: 'Campos obrigatórios',
+        detail: 'Preencha todos os campos',
+        life: 3000
+      });
+      return;
+    }
+
+    await onLogin(logName, password);
+  };
+
   return (
     <>
       <Toast ref={toast} position="top-right" />
-      
+
       <form onSubmit={handleSubmit} className="p-6">
         <div className="flex flex-column gap-4">
           <div className="flex flex-column gap-2">
-            <label htmlFor="logname" className="font-medium text-700">Log Name</label>
+            <label htmlFor="logname" className="font-medium text-700">Login</label>
             <div className="p-inputgroup">
               <span className="p-inputgroup-addon">
                 <i className="pi pi-user"></i>
@@ -90,7 +89,7 @@ const LoginForm = () => {
                 type="text"
                 value={logName}
                 onChange={(e) => setLogName(e.target.value)}
-                placeholder="Seu identificador"
+                placeholder="O seu nome de Login"
                 required
                 className="w-full"
                 pt={{ root: { style: { border: 'none', borderBottom: '1px solid #ced4da' } } }}
@@ -100,7 +99,7 @@ const LoginForm = () => {
           </div>
 
           <div className="flex flex-column gap-2">
-            <label htmlFor="password" className="font-medium text-700">Senha</label>
+            <label htmlFor="password" className="font-medium text-700">Password</label>
             <div className="p-inputgroup">
               <span className="p-inputgroup-addon">
                 <i className="pi pi-lock"></i>
@@ -111,7 +110,7 @@ const LoginForm = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 feedback={false}
                 toggleMask
-                placeholder="Sua senha secreta"
+                placeholder="Sua password secreta"
                 required
                 inputClassName="w-full"
                 inputStyle={{ border: 'none', borderBottom: '1px solid #ced4da' }}
@@ -132,7 +131,7 @@ const LoginForm = () => {
 
           <div className="mt-2">
             <Button
-              label={loading ? "Autenticando..." : "Entrar"}
+              label={loading ? "Autenticar..." : "Entrar"}
               icon={loading ? null : "pi pi-arrow-right"}
               iconPos="right"
               className="w-full"
