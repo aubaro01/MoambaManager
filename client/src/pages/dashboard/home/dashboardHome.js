@@ -2,7 +2,10 @@ import React, { useState, useRef } from "react";
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { Dialog } from "primereact/dialog";
-
+import { Card } from 'primereact/card';
+import { Chart } from 'primereact/chart';
+        
+        
 export default function LandingPage() {
   const [visibleDialog, setVisibleDialog] = useState(null);
   const toast = useRef(null);
