@@ -151,7 +151,6 @@ export default function LandingPage() {
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
   );
