@@ -17,7 +17,6 @@ const register = async (req, res) => {
     } catch (err) {
         console.error('Erro ao registrar utilizador:', err);
         res.status(500).json({ error: "Erro ao registrar utilizador.", details: err.message });
-
     }
 };
 
@@ -25,13 +24,24 @@ const login = async (req, res) => {
     const { logName, password } = req.body;
 
     try {
+        console.log('Login request recebido:', req.body);
+
         const user = await User.findOne({ logName });
         if (!user) {
+            console.warn(' Utilizador não encontrado:', logName);
             return res.status(401).json({ message: "Utilizador não encontrado." });
+        }
+
+        console.log(' Utilizador encontrado:', user);
+
+        if (typeof user.comparePassword !== 'function') {
+            console.error(' comparePassword não está definido no modelo User.');
+            return res.status(500).json({ error: "Erro interno no servidor: comparePassword não implementado." });
         }
 
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
+            console.warn('⚠️ Senha incorreta para:', logName);
             return res.status(401).json({ message: "Senha incorreta." });
         }
 
@@ -40,6 +50,8 @@ const login = async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES_IN || '1h' }
         );
+
+        console.log(' Token JWT gerado com sucesso.');
 
         res.status(200).json({
             message: "Login bem-sucedido!",
@@ -51,7 +63,8 @@ const login = async (req, res) => {
             }
         });
     } catch (err) {
-        res.status(500).json({ error: "Erro no login." });
+        console.error('Erro durante o login:', err);
+        res.status(500).json({ error: "Erro no login.", details: err.message });
     }
 };
 
