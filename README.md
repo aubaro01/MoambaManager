@@ -167,8 +167,22 @@ Resposta
             "EditadoEm": "2025-06-26T10:36:42.957Z",
             "__v": 0
         },
-}
 ```
+
+#### Retorna o total de produtos
+
+```http
+  GET /allProducts
+```
+
+#### Resposta
+
+``` json
+    {
+        "totalProducts":1
+    }
+```
+
 
 #### Update produto
 
