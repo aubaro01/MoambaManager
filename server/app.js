@@ -28,6 +28,7 @@ const productRoute = require("./routes/productRoute");
 const sellsRoute = require("./routes/sellRoute");
 const objRoute = require("./routes/objRoute");
 
+// user route done
 app.use("/api/v1", authRoute);
 app.use("/api/v1", productRoute);
 app.use("/api/v1", sellsRoute);
@@ -37,7 +38,7 @@ app.get('/', (req, res) => {
   res.status(200).json({ message: 'API online!!' });
 });
 
-// 🟡 Exportar app para uso com serverless 
+// Exportar app para uso com serverless 
 module.exports = app;
 
 //  iniciar servidor localmente (se não for serverless)

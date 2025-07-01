@@ -27,6 +27,16 @@ router.get('/sells/:id', verifyToken, async (req, res) => {
   }
 });
 
+router.get('/allsells', verifyToken, async(req, res) => {
+    try {
+    const count = await Sells.countDocuments();
+    res.status(200).json({ totalSells: count });
+  } catch (error) {
+    console.error('Erro ao contar vendas:', error);
+    res.status(500).json({ error: 'Erro ao contar vendas.' });
+  }
+});
+
 router.put('/sells/:id', verifyToken, async (req, res) => {
   try {
     const vendaAtualizada = await Sells.findByIdAndUpdate(req.params.id, req.body, { new: true });

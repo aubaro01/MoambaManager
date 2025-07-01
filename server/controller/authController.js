@@ -41,7 +41,7 @@ const login = async (req, res) => {
 
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
-            console.warn('⚠️ Senha incorreta para:', logName);
+            console.warn('Senha incorreta para:', logName);
             return res.status(401).json({ message: "Senha incorreta." });
         }
 
@@ -67,7 +67,6 @@ const login = async (req, res) => {
         res.status(500).json({ error: "Erro no login.", details: err.message });
     }
 };
-
 module.exports = {
     register,
     login,

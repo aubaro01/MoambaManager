@@ -26,6 +26,17 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
+
+exports.CountAllProducts = async (req, res) => {
+  try {
+    const count = await Product.countDocuments();
+    res.status(200).json({ totalProducts: count });
+  } catch (error) {
+    console.error("Erro ao procurar por todos os produtos:", error);
+    res.status(500).json({ error: "Erro ao contar o número de produtos." });
+  }
+};
+
 exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id); 
