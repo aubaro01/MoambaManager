@@ -28,7 +28,7 @@ const productRoute = require("./routes/productRoute");
 const sellsRoute = require("./routes/sellRoute");
 const objRoute = require("./routes/objRoute");
 
-// user route done
+// user route done tete
 app.use("/api/v1", authRoute);
 app.use("/api/v1", productRoute);
 app.use("/api/v1", sellsRoute);
