@@ -7,7 +7,7 @@ exports.criarObjetivo = async (req, res) => {
     const { mes, valor } = req.body;
 
     if (!mes || !valor) {
-      return res.status(400).json({ erro: "Mes e valor são obrigatórios." });
+      return res.status(400).json({ erro: "Mês e valor são obrigatórios." });
     }
 
     const novoObjetivo = new objModel({ mes, valor });
@@ -42,7 +42,7 @@ exports.getObjetivoPorMes = async (req, res) => {
     const skip = (page - 1) * limit;
 
     if (!mes) {
-      return res.status(400).json({ erro: "O parâmetro 'mes' é obrigatório." });
+      return res.status(400).json({ erro: "O parâmetro 'mês' é obrigatório." });
     }
 
     const total = await objModel.countDocuments({ mes });
