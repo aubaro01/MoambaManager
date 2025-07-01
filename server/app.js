@@ -8,21 +8,18 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: process.env.FRONTEND_ORIGIN || '*', 
+  origin: process.env.FRONTEND_ORIGIN || '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Conexão com o MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 20000 
-})
-.then(() => {
+  serverSelectionTimeoutMS: 20000
+}).then(() => {
   console.log('✅ Conectado ao MongoDB com sucesso');
 
-  // Agora sim: carrega as rotas só após conexão
+  // Carregar rotas
   const authRoute = require("./routes/userRoute");
   const productRoute = require("./routes/productRoute");
   const sellsRoute = require("./routes/sellRoute");
@@ -36,16 +33,10 @@ mongoose.connect(process.env.MONGODB_URI, {
   app.get('/', (req, res) => {
     res.status(200).json({ message: 'API online!!' });
   });
-
-  // Se não for serverless, inicia o servidor
-  if (require.main === module) {
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
-    });
-  }
-
-})
-.catch((err) => {
+}).catch((err) => {
   console.error('❌ Erro ao conectar ao MongoDB:', err);
 });
+
+// Usar adaptador para Vercel ou AWS
+const serverlessExpress = require('@vendia/serverless-express');
+module.exports = serverlessExpress({ app });
