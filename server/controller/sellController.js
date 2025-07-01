@@ -61,6 +61,16 @@ exports.getAllSells = async (req, res) => {
   }
 };
 
+exports.CountAllSells = async (req, res) => {
+  try {
+    const count = await Sells.countDocuments();
+    res.status(200).json({ totalProducts: count });
+  } catch (error) {
+    console.error("Erro ao  contar o número total de vendas:", error);
+    res.status(500).json({ error: "Erro ao contar todas as vendas." });
+  }
+};
+
 exports.getSellById = async (req, res) => {
   try {
     const venda = await Sells.findById(req.params.id).populate('products.product');

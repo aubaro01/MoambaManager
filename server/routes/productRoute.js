@@ -18,5 +18,5 @@ router.put("/product/:id", verifyToken, updateProduct);
 // Rotas públicas
 router.get("/products", getAllProducts);
 router.get("/product/:id", getProductById);
-
+router.get("/allProducts", getAllProducts);
 module.exports = router;
