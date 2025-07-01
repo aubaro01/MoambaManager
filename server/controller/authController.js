@@ -28,7 +28,6 @@ const login = async (req, res) => {
 
         const user = await User.findOne({ logName });
         if (!user) {
-            console.warn(' Utilizador não encontrado:', logName);
             return res.status(401).json({ message: "Utilizador não encontrado." });
         }
 
@@ -41,8 +40,7 @@ const login = async (req, res) => {
 
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
-            console.warn('Senha incorreta para:', logName);
-            return res.status(401).json({ message: "Senha incorreta." });
+            return res.status(401).json({ message: "Password incorreta." });
         }
 
         const token = jwt.sign(
@@ -54,10 +52,9 @@ const login = async (req, res) => {
         console.log(' Token JWT gerado com sucesso.');
 
         res.status(200).json({
-            message: "Login bem-sucedido!",
+            message: "Sucesso! Login feito!",
             token,
             user: {
-                id: user._id,
                 nome: user.nome,
                 logName: user.logName
             }
