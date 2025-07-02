@@ -1,81 +1,46 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card } from 'primereact/card';
 import { Toast } from 'primereact/toast';
-import { useNavigate } from 'react-router-dom';
-import {api} from '../../services/api';
+import { api } from '../../services/api'; 
 
 export default function ProdutosCard() {
-  const [produtos, setProdutos] = useState(null);
+  const [totalProducts, setTotalProducts] = useState(null);
   const [loading, setLoading] = useState(false);
   const toast = useRef(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProdutos = async () => {
+    const fetchProducts = async () => {
       setLoading(true);
-
-      const token = localStorage.getItem('jwt_token');
-
-      if (!token) {
-        toast.current.show({
-          severity: 'warn',
-          summary: 'Não autenticado',
-          detail: 'Faça login para acessar os dados',
-          life: 3000
-        });
-        navigate('/');
-        return;
-      }
-
       try {
-        const response = await api.get('/allProducts', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setProdutos(response.data.totalProdutos);
-
+        const response = await api.get('/allProducts'); 
+        setTotalProducts(response.data.totalProducts);
       } catch (error) {
-        if (error.response?.status === 401) {
-          localStorage.removeItem('jwt_token');
-          toast.current.show({
-            severity: 'error',
-            summary: 'Sessão expirada',
-            detail: 'Por favor, faça login novamente.',
-            life: 4000
-          });
-          navigate('/');
-        } else {
-          toast.current.show({
-            severity: 'error',
-            summary: 'Erro ao buscar vendas',
-            detail: error.message || 'Erro desconhecido',
-            life: 4000
-          });
-        }
+        toast.current.show({
+          severity: 'error',
+          summary: 'Erro ao buscar produtos',
+          detail: error.response?.data?.message || error.message,
+          life: 3000,
+        });
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProdutos();
-  }, [navigate]);
+    fetchProducts();
+  }, []);
 
   return (
     <>
       <Toast ref={toast} />
-      <div className="card">
-        <Card title="Total de Produtos">
-          {loading ? (
-            <i className="pi pi-spin pi-spinner" style={{ fontSize: '2rem' }}></i>
-          ) : (
-            <p className="m-0" style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>
-              {produtos !== null ? produtos : 'Sem dados'}
-            </p>
-          )}
-        </Card>
-      </div>
+      <Card title="Produtos" className="mb-4">
+        {loading ? (
+          <i className="pi pi-spin pi-spinner" style={{ fontSize: '2rem' }}></i>
+        ) : (
+          <p className="m-0" style={{ fontSize: '2rem', fontWeight: 'bold' }}>
+            {totalProducts !== null ? totalProducts : '—'}
+          </p>
+        )}
+      </Card>
     </>
   );
 }
