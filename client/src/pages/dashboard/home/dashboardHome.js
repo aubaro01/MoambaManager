@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
 import { Toast } from 'primereact/toast';
-import { Button } from 'primereact/button';
-import { Dialog } from "primereact/dialog";
+import  Header  from '../../../components/Header/headerApp';    
+import VendasCard from '../../../components/Cards/VendasCard';
+import ProdutosCard from '../../../components/Cards/ProdutosCard'; 
+import Footer from '../../../components/Footer/footer'; 
 
 export default function LandingPage() {
   const [visibleDialog, setVisibleDialog] = useState(null);
@@ -11,17 +13,17 @@ export default function LandingPage() {
     {
       icon: 'chart-line',
       title: 'Análises',
-      description: 'Recursos avançados',
+      description: 'Recursos avançados para monitorar e interpretar seus dados em tempo real.',
     },
     {
       icon: 'shield',
       title: 'Segurança',
-      description: 'Recursos avançados',
+      description: 'Proteção reforçada para manter seus dados seguros e acessos controlados.',
     },
     {
       icon: 'sync',
       title: 'Sincronização',
-      description: 'Recursos avançados',
+      description: 'Sincronize seus dados em múltiplos dispositivos sem perder a integridade.',
     }
   ];
 
@@ -29,88 +31,45 @@ export default function LandingPage() {
     <div className="min-h-screen flex flex-column bg-primary-50 surface-ground text-900">
       <Toast ref={toast} position="top-right" />
 
-      <header className="p-3 flex justify-content-between align-items-center surface-card shadow-2">
-        <div className="flex align-items-center">
-          <div className="bg-primary p-3 border-round shadow-2">
-            <i className="pi pi-cloud text-3xl text-white"></i>
-          </div>
-          <span className="ml-3 font-bold text-xl text-primary">Moamba Manager</span>
-        </div>
-        <div>
-          <Button
-            label="Suporte"
-            icon="pi pi-question-circle"
-            className="p-button-text text-600"
-            onClick={() => setVisibleDialog("suporte")}
-          />
-          <Button
-            label="Sobre"
-            icon="pi pi-info-circle"
-            className="p-button-text ml-2 text-600"
-            onClick={() => setVisibleDialog("sobre")}
-          />
-          <Dialog
-            header="Suporte"
-            visible={visibleDialog === "suporte"} 
-            style={{ width: '50vw' }}
-            maximizable
-            onHide={() => setVisibleDialog(null)} 
-          >
-            <p className="m-0">
-              Para suporte, entre em contato pelo github: <strong>https://github.com/aubaro01</strong>
-            </p>
-          </Dialog>
-          <Dialog
-            header="Sobre o Sistema"
-            visible={visibleDialog === "sobre"}
-            style={{ width: "50vw" }}
-            maximizable
-            onHide={() => setVisibleDialog(null)}
-          >
-            <p className="m-0">
-              O <strong>Moamba Manager</strong> é uma plataforma para gerenciamento de negócios.
-              Desenvolvido com foco em segurança, desempenho e usabilidade.
-            </p>
-          </Dialog>
-        </div>
-      </header>
+      <Header />
 
-      <div className="flex flex-grow-1 flex-column md:flex-row align-items-center justify-content-center p-4 md:p-8">
-        <div className="w-full md:w-6 flex justify-content-center mb-6 md:mb-0">
-          <div className="max-w-30rem w-full">
-            <div className="surface-100 border-2 border-dashed border-primary border-round w-full h-24rem md:h-36rem flex flex-column align-items-center justify-content-center">
-              <i className="pi pi-lock text-6xl text-primary mb-3"></i>
-              <h3 className="text-2xl font-bold text-900 text-center">Controle Total do Seu Negócio</h3>
-              <p className="text-600 mt-2 text-center px-3 md:px-0">
-                Gerencie suas operações com segurança e eficiência
+      <div className="flex flex-grow-1 flex-column md:flex-row align-items-start justify-content-center p-4 md:p-8 gap-8">
+        <div className="w-full md:w-6 flex justify-content-center max-w-30rem">
+          <div className="w-full surface-card border-round shadow-2 overflow-hidden">
+            <div
+              className="bg-primary p-6 text-black flex flex-column align-items-center justify-content-center"
+              style={{ height: '100%' }}
+            >
+              <h1 className="text-3xl font-bold mb-3">Bem-vindo(a)!</h1>
+              <p className="opacity-90 text-center text-lg">
+                Explore o painel para acompanhar seu negócio e tomar decisões informadas.
               </p>
             </div>
-
-            <div className="mt-6 flex flex-column gap-5">
-              {features.map(({ icon, title, description }, idx) => (
-                <div key={idx} className="flex flex-column">
-                  <div className="flex align-items-center gap-3">
-                    <span className="bg-primary-100 text-primary p-2 border-round">
-                      <i className={`pi pi-${icon}`}></i>
-                    </span>
-                    <h4 className="font-bold text-900 text-lg">#{title}</h4>
-                  </div>
-                  <p className="text-600 mt-2 ml-7">{description}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
+        <div className="w-full md:w-6 flex flex-column gap-6 max-w-30rem">
+          <VendasCard className="w-full" />
+          <ProdutosCard className="w-full"/>
 
-        <div className="w-full md:w-6 flex justify-content-center">
-          <div className="w-full max-w-30rem surface-card border-round shadow-2 overflow-hidden">
-            <div className="bg-primary p-6 text-white flex flex-column align-items-center justify-content-center" style={{height: '100%'}}>
-              <h1 className="text-2xl font-bold mb-1">Bem-vindo(a)!</h1>
-              <p className="opacity-90 text-center">Explore o painel para acompanhar seu negócio.</p>
-            </div>
+          <div className="grid grid-nogutter gap-4">
+            {features.map(({ icon, title, description }, idx) => (
+              <div
+                key={idx}
+                className="surface-card border-round shadow-sm p-4 flex flex-column hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+              >
+                <div className="flex align-items-center gap-4 mb-3">
+                  <span className="bg-primary-100 text-primary p-3 border-round text-xl flex align-items-center justify-content-center">
+                    <i className={`pi pi-${icon}`}></i>
+                  </span>
+                  <h4 className="font-semibold text-xl text-900 m-0">{title}</h4>
+                </div>
+                <p className="text-600 m-0">{description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
