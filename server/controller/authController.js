@@ -57,9 +57,7 @@ const login = async (req, res) => {
             message: "Login bem-sucedido!",
             token,
             user: {
-                id: user._id,
                 nome: user.nome,
-                logName: user.logName
             }
         });
     } catch (err) {
