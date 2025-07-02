@@ -4,7 +4,7 @@ import { Toast } from 'primereact/toast';
 import { api } from '../../services/api';
 
 export default function MonthlyGoalsCard() {
-  const [monthlySalesGoal, setMonthlySalesGoal] = useState(null);
+  const [monthlySales, setMonthlySales] = useState(null);
   const [loading, setLoading] = useState(false);
   const toast = useRef(null);
 
@@ -12,12 +12,12 @@ export default function MonthlyGoalsCard() {
     const fetchGoals = async () => {
       setLoading(true);
       try {
-        const response = await api.get('/obj?mes=?'); // Ajuste o endpoint conforme necessário
-        setMonthlySalesGoal(response.data.monthlySalesGoal);
+        const response = await api.get('/obj?mes=?');
+        setMonthlySales(response.data.monthlySalesGoal);
       } catch (error) {
         toast.current.show({
           severity: 'error',
-          summary: 'Erro ao buscar metas mensais',
+          summary: 'Erro ao buscar por mensais',
           detail: error.response?.data?.message || error.message,
           life: 3000,
         });
@@ -33,7 +33,7 @@ export default function MonthlyGoalsCard() {
     <>
       <Toast ref={toast} />
       <Card
-        title="Meta mensal de Vendas"
+        title="Vendas Mensais"
         className="mb-4"
         style={{
           borderRadius: 12,
@@ -46,7 +46,7 @@ export default function MonthlyGoalsCard() {
       >
         {loading ? (
           <div
-            aria-label="Carregando metas mensais"
+            aria-label="A carregar vendas mensais"
             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 100 }}
           >
             <i className="pi pi-spin pi-bullseye" style={{ fontSize: '3rem', color: '#6366F1' }} />
@@ -69,7 +69,7 @@ export default function MonthlyGoalsCard() {
                 margin: 0,
               }}
             >
-              {monthlySalesGoal !== null ? monthlySalesGoal : '—'}
+              {monthlySales !== null ? monthlySales : '—'}
             </p>
             <p style={{ fontSize: '1rem', color: '#6B7280', marginTop: '-0.2rem', fontWeight: 500 }}>
             </p>
