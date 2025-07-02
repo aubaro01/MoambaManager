@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
 import { Toast } from 'primereact/toast';
-import  Header  from '../../../components/Header/headerApp';    
+import Header from '../../../components/Header/headerApp';
 import VendasCard from '../../../components/Cards/VendasCard';
-import ProdutosCard from '../../../components/Cards/ProdutosCard'; 
-import Footer from '../../../components/Footer/footer'; 
+import ProdutosCard from '../../../components/Cards/ProdutosCard';
+import ObjCard from '../../../components/Cards/Obj';
+import Footer from '../../../components/Footer/footer';
 
 export default function LandingPage() {
   const [visibleDialog, setVisibleDialog] = useState(null);
@@ -47,9 +48,18 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-        <div className="w-full md:w-6 flex flex-column gap-6 max-w-30rem">
-          <VendasCard className="w-full" />
-          <ProdutosCard className="w-full"/>
+        <div className="w-full md:w-6 flex flex-wrap justify-center gap-6 max-w-30rem">
+          <div className="flex-1 min-w-[14rem] max-w-[18rem]">
+            <VendasCard />
+          </div>
+          <div className="flex-1 min-w-[14rem] max-w-[18rem]">
+            <ProdutosCard />
+          </div>
+          <div className="flex-1 min-w-[14rem] max-w-[18rem]">
+            <ObjCard />
+          </div>
+
+
 
           <div className="grid grid-nogutter gap-4">
             {features.map(({ icon, title, description }, idx) => (
