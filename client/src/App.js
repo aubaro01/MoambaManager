@@ -4,7 +4,7 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
-import PrivateRoute from "./services/privateRoute";
+import PrivateRoute from "./services/api/privateRoute";
 import { PrimeReactProvider } from 'primereact/api';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from "./pages/landing";

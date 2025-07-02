@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card } from 'primereact/card';
 import { Toast } from 'primereact/toast';
-import { api } from '../../services/api';
+import { api } from '../../services/api/api';
 
 export default function MonthlyGoalsCard() {
   const [monthlySales, setMonthlySales] = useState(null);
