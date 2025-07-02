@@ -4,11 +4,11 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
-import PrivateRoute from "./services/privateRoute";
+import  PrivateRoute  from "./services/privateRoute";
 import { PrimeReactProvider } from 'primereact/api';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from "./pages/main";
-import Dashboard from "./pages/dashboard/home/dashboardHome";
+import  Dashboard from "./pages/dashboard/home/dashboardHome";
 import Produtos from "./pages/dashboard/products/main";
 import Vendas from "./pages/dashboard/sells/main";
 
@@ -18,11 +18,11 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          {<Route path="/dashboard" element={
-            <PrivateRoute>
+          {<Route path="/dashboard" element={ <Dashboard />} />}
+
+           {/* <PrivateRoute> 
               <Dashboard />
-            </PrivateRoute>
-          } />}
+            </PrivateRoute> */}
           {<Route path="/dashboard/produtos" element={
             <PrivateRoute>
               <Produtos />
