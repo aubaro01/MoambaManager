@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Card } from 'primereact/card';
 import { Toast } from 'primereact/toast';
-import { api } from '../../services/api'; 
+import { api } from '../../services/api';
 
 export default function VendasCard() {
-  const [totalVendas, settotalVendas] = useState(null);
+  const [totalVendas, setTotalVendas] = useState(null);
   const [loading, setLoading] = useState(false);
   const toast = useRef(null);
 
@@ -12,12 +12,12 @@ export default function VendasCard() {
     const fetchVendas = async () => {
       setLoading(true);
       try {
-        const response = await api.get('/allsells'); 
-        settotalVendas(response.data.totalSells);
+        const response = await api.get('/allsells');
+        setTotalVendas(response.data.totalSells);
       } catch (error) {
         toast.current.show({
           severity: 'error',
-          summary: 'Erro ao buscar produtos',
+          summary: 'Erro ao buscar vendas',
           detail: error.response?.data?.message || error.message,
           life: 3000,
         });
@@ -32,13 +32,47 @@ export default function VendasCard() {
   return (
     <>
       <Toast ref={toast} />
-      <Card title="Total de Vendas" className="mb-4">
+      <Card
+        title="Total de Vendas"
+        className="mb-4"
+        style={{
+          borderRadius: 12,
+          boxShadow: '0 8px 16px rgba(16, 185, 129, 0.2)',
+          textAlign: 'center',
+          padding: '2rem 1rem',
+          maxWidth: 320,
+          margin: 'auto',
+        }}
+      >
         {loading ? (
-          <i className="pi pi-spin pi-spinner" style={{ fontSize: '2rem' }}></i>
+          <div
+            aria-label="Carregando vendas"
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 100 }}
+          >
+            <i className="pi pi-spin pi-dollar" style={{ fontSize: '3rem', color: '#10B981' }} />
+          </div>
         ) : (
-          <p className="m-0" style={{ fontSize: '2rem', fontWeight: 'bold' }}>
-            {totalVendas !== null ? totalVendas : '—'}
-          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem' }}>
+            <i
+              className="pi pi-shopping-cart"
+              style={{
+                fontSize: '3rem',
+                color: '#10B981',
+              }}
+            />
+            <p
+              style={{
+                fontSize: '3.5rem',
+                fontWeight: '700',
+                color: '#059669',
+                margin: 0,
+              }}
+            >
+              {totalVendas !== null ? totalVendas : '—'}
+            </p>
+            <p style={{ fontSize: '1rem', color: '#4B5563', marginTop: '-0.2rem', fontWeight: 500 }}>
+            </p>
+          </div>
         )}
       </Card>
     </>

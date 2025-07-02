@@ -55,7 +55,7 @@ export default function HeaderApp() {
             className="w-3rem h-3rem border-circle shadow-2"
           />
           <span className="ml-3 font-bold text-xl text-primary">
-            Moamba Manager
+            MoaDash
           </span>
         </div>
 
