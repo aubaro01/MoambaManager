@@ -90,6 +90,16 @@ export default function HeaderApp() {
             disabled={isLoading}
           />
           <Button
+            label="Faturas"
+            icon="pi pi-receipt"
+            className="p-button-text text-600 mb-2 md:mb-0 md:ml-2"
+            onClick={() => {
+              setVisibleDialog("obj");
+              setMobileMenuVisible(false);
+            }}
+            disabled={isLoading}
+          />
+          <Button
             label="Objetivos Mensais"
             icon="pi pi-chart-pie"
             className="p-button-text text-600 mb-2 md:mb-0 md:ml-2"
@@ -110,7 +120,7 @@ export default function HeaderApp() {
 
         <Dialog
           header="Objetivos Mensais"
-          visible={visibleDialog === "obj"}
+          visible={visibleDialog === ""}
           style={{ width: "50vw", maxWidth: "90vw" }}
           maximizable
           onHide={() => setVisibleDialog(null)}
@@ -121,6 +131,22 @@ export default function HeaderApp() {
             usabilidade.
           </p>
         </Dialog>
+        <Dialog
+          header="Header"
+          visible={visibleDialog === "obj"}
+          style={{ width: '50vw' }}
+          onHide={() => {
+            if (!visibleDialog) return;
+            setVisibleDialog(false);
+          }}>
+          <p className="m-0">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </Dialog>
+
       </header>
     </>
   );
