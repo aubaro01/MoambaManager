@@ -167,6 +167,30 @@ Resposta
             "EditadoEm": "2025-06-26T10:36:42.957Z",
             "__v": 0
         },
+}
+```
+
+#### Retorna apenas um produto por id
+
+```http
+  Get /product/:id
+```
+
+#### Resposta
+
+``` json
+{
+    "_id": "685d5342261f41c627ae1821",
+    "nome": "Arroz Integral",
+    "preco": 15.99,
+    "peso": 1,
+    "pesoTipo": "KG",
+    "descricao": "Arroz integral tipo 1, pacote de 1kg.",
+    "categoria": "alimentar",
+    "criadoEm": "2025-06-26T14:03:46.029Z",
+    "EditadoEm": "2025-06-26T14:03:46.029Z",
+    "__v": 0
+}
 ```
 
 #### Retorna o total de produtos
@@ -175,6 +199,7 @@ Resposta
   GET /allProducts
 ```
 
+
 #### Resposta
 
 ``` json
@@ -182,7 +207,6 @@ Resposta
         "totalProducts":1
     }
 ```
-
 
 #### Update produto
 
