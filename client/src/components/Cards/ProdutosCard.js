@@ -8,13 +8,12 @@ import EditPrd from '../Form/Prd/editPrd';
 import AddPrd from '../Form/Prd/addPrd';
 import { api } from '../../services/api/api';
 
-const PrdCards = () => {
+const PrdCards = ({ filtroNome }) => {
   const [produtos, setProdutos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [produtoEditando, setProdutoEditando] = useState(null);
   const [modalEditVisivel, setModalEditVisivel] = useState(false);
   const [modalAddVisivel, setModalAddVisivel] = useState(false);
-
   const toast = useRef(null);
 
   useEffect(() => {
@@ -49,8 +48,8 @@ const PrdCards = () => {
   };
 
   const salvarEdicao = () => {
-    setProdutos(prev =>
-      prev.map(p => (p._id === produtoEditando._id ? produtoEditando : p))
+    setProdutos((prev) =>
+      prev.map((p) => (p._id === produtoEditando._id ? produtoEditando : p))
     );
     fecharModalEdit();
   };
@@ -67,7 +66,7 @@ const PrdCards = () => {
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
       accept: () => {
-        setProdutos(prev => prev.filter(p => p._id !== id));
+        setProdutos((prev) => prev.filter((p) => p._id !== id));
       }
     });
   };
@@ -75,13 +74,14 @@ const PrdCards = () => {
   const abrirAdicionar = () => setModalAddVisivel(true);
   const fecharAdicionar = () => setModalAddVisivel(false);
 
-  const salvarAdicionar = (novoProduto) => {
-    setProdutos(prev => [
-      ...prev,
-      { ...novoProduto, _id: Date.now().toString() }
-    ]);
+  const handleProdutoAdicionado = (novoProduto) => {
+    setProdutos((prev) => [...prev, novoProduto]);
     fecharAdicionar();
   };
+
+  const produtosFiltrados = produtos.filter((produto) =>
+    produto.nome.toLowerCase().includes(filtroNome.toLowerCase())
+  );
 
   return (
     <div className="w-full max-w-screen-xl mx-auto px-4 py-6">
@@ -100,12 +100,13 @@ const PrdCards = () => {
           className="p-button-sm"
         />
       </div>
+
       {loading ? (
         <p>A carregar produtos...</p>
       ) : (
         <div className="grid grid-nogutter md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {produtos.length === 0 && <p>Nenhum produto encontrado.</p>}
-          {produtos.map(produto => (
+          {produtosFiltrados.length === 0 && <p>Nenhum produto encontrado.</p>}
+          {produtosFiltrados.map((produto) => (
             <Card
               key={produto._id}
               title={produto.nome}
@@ -140,6 +141,12 @@ const PrdCards = () => {
         </div>
       )}
 
+      <AddPrd
+        visible={modalAddVisivel}
+        onHide={fecharAdicionar}
+        onProdutoAdicionado={handleProdutoAdicionado}
+      />
+
       {modalEditVisivel && (
         <Dialog
           header="Editar Produto"
@@ -157,12 +164,6 @@ const PrdCards = () => {
           <EditPrd produto={produtoEditando} onChange={handleProdutoChange} />
         </Dialog>
       )}
-
-      <AddPrd
-        visible={modalAddVisivel}
-        onHide={fecharAdicionar}
-        onSalvar={salvarAdicionar}
-      />
     </div>
   );
 };

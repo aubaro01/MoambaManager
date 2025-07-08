@@ -16,7 +16,6 @@ export default function ProdutosPage() {
                     <PrdCards filtroNome={filtroNome} />
                 </div>
             </main>
-
             <Footer />
         </div>
     );
