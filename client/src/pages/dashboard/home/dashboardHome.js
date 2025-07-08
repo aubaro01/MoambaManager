@@ -1,11 +1,10 @@
 import React, { useState, useRef } from "react";
 import { Toast } from 'primereact/toast';
 import Header from '../../../components/Header/headerApp';
-import VendasCard from '../../../components/Cards/VendasCard';
-import ProdutosCard from '../../../components/Cards/ProdutosCard';
+import VendasCard from '../../../components/Cards/VendasHomeCard';
+import ProdutosCard from '../../../components/Cards/ProdutosHomeCard';
 import ObjCard from '../../../components/Cards/Obj';
 import Footer from '../../../components/Footer/footer';
-import TabelaExemplo from '../../../components/Tables/vendasTabela';
 
 export default function LandingPage() {
   const [visibleDialog, setVisibleDialog] = useState(null);
@@ -50,7 +49,11 @@ export default function LandingPage() {
           </div>
         </div>
       </div>
+      {/*<div className="overflow-x-auto">
+        <TabelaExemplo />
+      </div>*/}
       <Footer />
     </div>
+
   );
 }
