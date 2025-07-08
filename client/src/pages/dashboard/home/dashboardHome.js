@@ -1,32 +1,14 @@
 import React, { useState, useRef } from "react";
 import { Toast } from 'primereact/toast';
 import Header from '../../../components/Header/headerApp';
-import VendasCard from '../../../components/Cards/VendasCard';
-import ProdutosCard from '../../../components/Cards/ProdutosCard';
+import VendasCard from '../../../components/Cards/VendasHomeCard';
+import ProdutosCard from '../../../components/Cards/ProdutosHomeCard';
 import ObjCard from '../../../components/Cards/Obj';
 import Footer from '../../../components/Footer/footer';
 
 export default function LandingPage() {
   const [visibleDialog, setVisibleDialog] = useState(null);
   const toast = useRef(null);
-
-  const features = [
-    {
-      icon: 'chart-line',
-      title: 'Análises',
-      description: 'Recursos avançados para monitorar e interpretar seus dados em tempo real.',
-    },
-    {
-      icon: 'shield',
-      title: 'Segurança',
-      description: 'Proteção reforçada para manter seus dados seguros e acessos controlados.',
-    },
-    {
-      icon: 'sync',
-      title: 'Sincronização',
-      description: 'Sincronize seus dados em múltiplos dispositivos sem perder a integridade.',
-    }
-  ];
 
   return (
     <div className="min-h-screen flex flex-column bg-primary-50 surface-ground text-900">
@@ -65,26 +47,13 @@ export default function LandingPage() {
           <div className="flex-1 min-w-[14rem] max-w-[18rem]">
             <ObjCard />
           </div>
-
-          <div className="grid grid-nogutter gap-4 w-full">
-            {features.map(({ icon, title, description }, idx) => (
-              <div
-                key={idx}
-                className="surface-card border-round shadow-sm p-4 flex flex-column hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-              >
-                <div className="flex align-items-center gap-4 mb-3">
-                  <span className="bg-primary-100 text-primary p-3 border-round text-xl flex align-items-center justify-content-center">
-                    <i className={`pi pi-${icon}`}></i>
-                  </span>
-                  <h4 className="font-semibold text-xl text-900 m-0">{title}</h4>
-                </div>
-                <p className="text-600 m-0">{description}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
+      {/*<div className="overflow-x-auto">
+        <TabelaExemplo />
+      </div>*/}
       <Footer />
     </div>
+
   );
 }

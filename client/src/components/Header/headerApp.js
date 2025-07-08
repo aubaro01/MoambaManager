@@ -76,6 +76,13 @@ export default function HeaderApp() {
           `}
         >
           <Button
+            label="Home"
+            icon={isLoading ? "pi pi-spin pi-spinner" : "pi pi-home"}
+            className="p-button-text text-600 md:ml-2"
+            onClick={() => handleNavigate("/dashboard")}
+            disabled={isLoading}
+          />
+          <Button
             label="Produtos"
             icon="pi pi-cart-arrow-down"
             className="p-button-text text-600 mb-2 md:mb-0 md:ml-2"
@@ -87,6 +94,16 @@ export default function HeaderApp() {
             icon="pi pi-chart-bar"
             className="p-button-text text-600 mb-2 md:mb-0 md:ml-2"
             onClick={() => handleNavigate("/dashboard/vendas")}
+            disabled={isLoading}
+          />
+          <Button
+            label="Faturas"
+            icon="pi pi-receipt"
+            className="p-button-text text-600 mb-2 md:mb-0 md:ml-2"
+            onClick={() => {
+              setVisibleDialog("obj");
+              setMobileMenuVisible(false);
+            }}
             disabled={isLoading}
           />
           <Button
@@ -110,7 +127,7 @@ export default function HeaderApp() {
 
         <Dialog
           header="Objetivos Mensais"
-          visible={visibleDialog === "obj"}
+          visible={visibleDialog === ""}
           style={{ width: "50vw", maxWidth: "90vw" }}
           maximizable
           onHide={() => setVisibleDialog(null)}
@@ -119,6 +136,21 @@ export default function HeaderApp() {
             O <strong>Moamba Manager</strong> é uma plataforma para gerenciamento
             de negócios. Desenvolvido com foco em segurança, desempenho e
             usabilidade.
+          </p>
+        </Dialog>
+        <Dialog
+          header="Header"
+          visible={visibleDialog === "obj"}
+          style={{ width: '50vw' }}
+          onHide={() => {
+            if (!visibleDialog) return;
+            setVisibleDialog(false);
+          }}>
+          <p className="m-0">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
           </p>
         </Dialog>
       </header>

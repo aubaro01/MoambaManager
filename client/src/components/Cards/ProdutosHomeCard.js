@@ -3,21 +3,21 @@ import { Card } from 'primereact/card';
 import { Toast } from 'primereact/toast';
 import { api } from '../../services/api/api';
 
-export default function MonthlyGoalsCard() {
-  const [monthlySales, setMonthlySales] = useState(null);
+export default function ProdutosCard() {
+  const [totalProducts, setTotalProducts] = useState(null);
   const [loading, setLoading] = useState(false);
   const toast = useRef(null);
 
   useEffect(() => {
-    const fetchGoals = async () => {
+    const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = await api.get('/obj?mes=?');
-        setMonthlySales(response.data.monthlySalesGoal);
+        const response = await api.get('/allProducts');
+        setTotalProducts(response.data.totalProducts);
       } catch (error) {
         toast.current.show({
           severity: 'error',
-          summary: 'Erro ao buscar por mensais',
+          summary: 'Erro ao buscar produtos',
           detail: error.response?.data?.message || error.message,
           life: 3000,
         });
@@ -26,14 +26,14 @@ export default function MonthlyGoalsCard() {
       }
     };
 
-    fetchGoals();
+    fetchProducts();
   }, []);
 
   return (
     <>
       <Toast ref={toast} />
       <Card
-        title="Vendas Mensais"
+        title="Total de Produtos"
         className="mb-4"
         style={{
           borderRadius: 12,
@@ -46,19 +46,20 @@ export default function MonthlyGoalsCard() {
       >
         {loading ? (
           <div
-            aria-label="A carregar vendas mensais"
+            aria-label="Carregando produtos"
             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 100 }}
           >
-            <i className="pi pi-spin pi-bullseye" style={{ fontSize: '3rem', color: '#6366F1' }} />
+            <i className="pi pi-spin pi-box" style={{ fontSize: '3rem', color: '#6366F1' }} />
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem' }}>
             <i
-              className="pi pi-arrow-up-right"
+              className="pi pi-box"
               style={{
                 fontSize: '3rem',
                 color: '#6366F1',
                 animation: 'pulse 2s infinite',
+               
               }}
             />
             <p
@@ -69,7 +70,7 @@ export default function MonthlyGoalsCard() {
                 margin: 0,
               }}
             >
-              {monthlySales !== null ? monthlySales : '—'}
+              {totalProducts !== null ? totalProducts : '—'}
             </p>
             <p style={{ fontSize: '1rem', color: '#6B7280', marginTop: '-0.2rem', fontWeight: 500 }}>
             </p>

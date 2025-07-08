@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
-import { api } from "../../services/api";
+import { api } from "../../services/api/api";
 import { useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast'; 
 
