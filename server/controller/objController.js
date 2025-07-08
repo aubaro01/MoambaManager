@@ -36,20 +36,18 @@ exports.listarObjetivos = async (req, res) => {
 
 exports.getObjetivoPorMes = async (req, res) => {
   try {
-    const { mes } = req.query;
+    const now = new Date();
+    const mes = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
-
-    if (!mes) {
-      return res.status(400).json({ erro: "O parâmetro 'mês' é obrigatório." });
-    }
 
     const total = await objModel.countDocuments({ mes });
     const data = await objModel.find({ mes }).skip(skip).limit(limit);
 
     if (data.length === 0) {
-      return res.status(404).json({ mensagem: "Nenhum objetivo encontrado para esse mês." });
+      return res.status(404).json({ mensagem: "Nenhum objetivo encontrado para este mês." });
     }
 
     res.json(paginatedResponse({ data, total, page, limit }));
