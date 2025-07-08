@@ -76,6 +76,13 @@ export default function HeaderApp() {
           `}
         >
           <Button
+            label="Home"
+            icon={isLoading ? "pi pi-spin pi-spinner" : "pi pi-home"}
+            className="p-button-text text-600 md:ml-2"
+            onClick={() => handleNavigate("/dashboard")}
+            disabled={isLoading}
+          />
+          <Button
             label="Produtos"
             icon="pi pi-cart-arrow-down"
             className="p-button-text text-600 mb-2 md:mb-0 md:ml-2"
