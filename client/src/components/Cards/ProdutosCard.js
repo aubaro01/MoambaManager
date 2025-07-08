@@ -107,7 +107,7 @@ const PrdCards = () => {
               footer={
                 <div className="flex flex-column gap-2 pt-3 items-start">
                   <span className="text-lg font-bold text-green-600">
-                    R$ {produto.preco.toFixed(2)}
+                    € {produto.preco.toFixed(2)}
                   </span>
                   <div className="flex gap-2">
                     <Button
