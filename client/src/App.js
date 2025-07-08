@@ -33,6 +33,11 @@ function App() {
               <Vendas />
             </PrivateRoute>
           } />}*/}
+          {<Route path="/dashboard/vendas" element={<Vendas /> } />}
+            {/* <PrivateRoute>
+              <Vendas />
+            </PrivateRoute>
+          } />}*/}
           {/* <Route path="*" element={<ErroPage />} /> */}
         </Routes>
       </Router>
