@@ -13,7 +13,6 @@ export default function ProdutosPage() {
             <main className="flex-grow-1">
                 <div className="px-4 py-6 max-w-screen-xl mx-auto">
                     <PrdFilters value={filtroNome} onChange={setFiltroNome} />
-
                     <PrdCards filtroNome={filtroNome} />
                 </div>
             </main>

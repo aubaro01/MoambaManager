@@ -1,4 +1,3 @@
-// ProdutoForm.js
 import React from 'react';
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
@@ -11,24 +10,24 @@ const ProdutoForm = ({ produto, onChange }) => {
   return (
     <div className="p-fluid">
       <div className="field mb-3">
-        <label htmlFor="nome">Nome</label>
+        <label htmlFor="nome">Nome do produto</label>
         <InputText
           id="nome"
           value={produto.nome || ''}
           onChange={e => onFieldChange('nome', e.target.value)}
         />
       </div>
-
       <div className="field mb-3">
         <label htmlFor="preco">Preço</label>
         <InputNumber
           id="preco"
-          value={produto.preco || 0}
+          value={produto.preco ?? null}
           mode="currency"
-          currency="BRL"
-          locale="pt-BR"
-          onValueChange={e => onFieldChange('preco', e.value)}
-          style={{ width: '100%' }}
+          currency="EUR"
+          locale="pt-PT"
+          placeholder="0,00 €"
+          onValueChange={e => onFieldChange('preco', e.value ?? null)}
+          className="w-full"
         />
       </div>
 
