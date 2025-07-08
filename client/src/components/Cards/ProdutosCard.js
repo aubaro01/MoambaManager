@@ -47,12 +47,31 @@ const PrdCards = ({ filtroNome }) => {
     setProdutoEditando(null);
   };
 
-  const salvarEdicao = () => {
+
+const salvarEdicao = async () => {
+  try {
+    const response = await api.put(`/product/${produtoEditando._id}`, produtoEditando); 
+
     setProdutos((prev) =>
-      prev.map((p) => (p._id === produtoEditando._id ? produtoEditando : p))
+      prev.map((p) => (p._id === produtoEditando._id ? response.data : p))
     );
+    toast.current?.show({
+      severity: 'success',
+      summary: 'Produto atualizado',
+      detail: 'As alterações foram salvas com sucesso.',
+      life: 3000
+    });
+
     fecharModalEdit();
-  };
+  } catch (error) {
+    toast.current?.show({
+      severity: 'error',
+      summary: 'Erro ao atualizar',
+      detail: error.response?.data?.message || 'Erro inesperado ao salvar',
+      life: 4000
+    });
+  }
+};
 
   const handleProdutoChange = (produtoAtualizado) => {
     setProdutoEditando(produtoAtualizado);
