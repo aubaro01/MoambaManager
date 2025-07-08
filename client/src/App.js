@@ -19,11 +19,11 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          {<Route path="/dashboard" element={<Dashboard />} /> }
-            {/*<PrivateRoute>
+          {<Route path="/dashboard" element={
+            <PrivateRoute>
               <Dashboard />
             </PrivateRoute>
-          } />} */}
+          } />} 
           {<Route path="/dashboard/produtos" element={
              <PrivateRoute>
               <Produtos />
