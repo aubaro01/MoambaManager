@@ -48,7 +48,8 @@ export default function HeaderApp() {
       <Toast ref={toast} />
 
       <header className="p-3 surface-card shadow-2 flex flex-wrap align-items-center justify-content-between">
-        <div className="flex align-items-center flex-grow-1">
+        <div className="flex align-items-center flex-grow-1" onClick={() => handleNavigate("/dashboard")}
+>
           <img
             src={logoIMG}
             alt="Logo Moamba Manager"
@@ -139,7 +140,7 @@ export default function HeaderApp() {
           </p>
         </Dialog>
         <Dialog
-          header="Header"
+          header="Faturas"
           visible={visibleDialog === "obj"}
           style={{ width: '50vw' }}
           onHide={() => {
@@ -147,10 +148,7 @@ export default function HeaderApp() {
             setVisibleDialog(false);
           }}>
           <p className="m-0">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            Em construção!!!!!!!!!!!!!!!
           </p>
         </Dialog>
       </header>

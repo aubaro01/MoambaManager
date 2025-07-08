@@ -12,7 +12,7 @@ export default function MonthlyGoalsCard() {
     const fetchGoals = async () => {
       setLoading(true);
       try {
-        const response = await api.get('/obj?mes=?');
+        const response = await api.get('/objetivo');
         setMonthlySales(response.data.monthlySalesGoal);
       } catch (error) {
         toast.current.show({

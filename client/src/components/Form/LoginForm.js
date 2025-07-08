@@ -14,7 +14,6 @@ const LoginForm = () => {
 
   const navigate = useNavigate();  
 
-  // Função que realiza o login via API
   const onLogin = async (logName, password) => {
     setLoading(true);
     try {
