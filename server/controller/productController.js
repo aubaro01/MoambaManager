@@ -41,6 +41,15 @@ exports.getProductByName = async (req, res) => {
   }
 };
 
+exports.getEnums = (req, res) => {
+  try {
+    const enums = Product.getEnums();
+    res.json(enums);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao obter enums", error });
+  }
+};
+
 exports.getAllProducts = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
