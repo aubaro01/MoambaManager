@@ -58,6 +58,7 @@ const PrdCards = ({ filtroNome }) => {
     setProdutoEditando(produtoAtualizado);
   };
 
+
   const handleExcluir = (id) => {
     confirmDialog({
       message: 'Tem certeza que deseja eliminar este produto?',
@@ -65,8 +66,26 @@ const PrdCards = ({ filtroNome }) => {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
-      accept: () => {
-        setProdutos((prev) => prev.filter((p) => p._id !== id));
+      accept: async () => {
+        try {
+          await api.delete(`/product/${id}`);
+
+          setProdutos((prev) => prev.filter((p) => p._id !== id));
+
+          toast.current?.show({
+            severity: 'success',
+            summary: 'Produto removido',
+            detail: 'O produto foi eliminado com sucesso.',
+            life: 3000,
+          });
+        } catch (error) {
+          toast.current?.show({
+            severity: 'error',
+            summary: 'Erro ao eliminar',
+            detail: error.response?.data?.message || 'Erro inesperado',
+            life: 4000,
+          });
+        }
       }
     });
   };
