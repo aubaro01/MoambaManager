@@ -23,16 +23,16 @@ function App() {
               <Dashboard />
             </PrivateRoute>
           } />} */}
-          {<Route path="/dashboard/produtos" element={<Produtos />} />}
-            {/*<PrivateRoute>
+          {<Route path="/dashboard/produtos" element={  
+            <PrivateRoute>
               <Produtos />
             </PrivateRoute>
-          } />}*/}
-          {<Route path="/dashboard/vendas" element={
-            <PrivateRoute>
+          } />}
+          {<Route path="/dashboard/vendas" element={<Vendas /> } />}
+            {/* <PrivateRoute>
               <Vendas />
             </PrivateRoute>
-          } />}
+          } />}*/}
           {/* <Route path="*" element={<ErroPage />} /> */}
         </Routes>
       </Router>
