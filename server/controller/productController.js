@@ -11,6 +11,36 @@ exports.createProduct = async (req, res) => {
   }
 };
 
+exports.getProductById = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id); 
+    if (!product) {
+      return res.status(404).json({ message: "Produto não encontrado" });
+    }
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao procurar por produto", error });
+  }
+};
+
+exports.getProductByName = async (req, res) => {
+  try {
+    const { nome } = req.query;
+
+    if (!nome) {
+      return res.status(400).json({ message: "Parâmetro 'nome' é obrigatório." });
+    }
+
+    const produtos = await Product.find({
+      nome: { $regex: nome, $options: 'i' } 
+    });
+
+    res.json(produtos);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao buscar produtos pelo nome", error });
+  }
+};
+
 exports.getAllProducts = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -26,7 +56,6 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
-
 exports.CountAllProducts = async (req, res) => {
   try {
     const count = await Product.countDocuments();
@@ -34,18 +63,6 @@ exports.CountAllProducts = async (req, res) => {
   } catch (error) {
     console.error("Erro ao procurar por todos os produtos:", error);
     res.status(500).json({ error: "Erro ao contar o número de produtos." });
-  }
-};
-
-exports.getProductById = async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id); 
-    if (!product) {
-      return res.status(404).json({ message: "Produto não encontrado" });
-    }
-    res.json(product);
-  } catch (error) {
-    res.status(500).json({ message: "Erro ao procurar por produto", error });
   }
 };
 
