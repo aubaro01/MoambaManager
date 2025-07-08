@@ -24,33 +24,37 @@ const AdicionarProduto = ({ visible, onHide, onProdutoAdicionado }) => {
 
   const salvar = async () => {
     setLoading(true);
+
     try {
       const response = await api.post('/product', produto);
 
-      toast.current.show({
-        severity: 'success',
-        summary: 'Produto salvo',
-        detail: 'Produto adicionado com sucesso!',
-        life: 3000,
-      });
+      if (response.status >= 200 && response.status < 300) {
+        toast.current.show({
+          severity: 'success',
+          summary: 'Produto salvo',
+          detail: 'Produto adicionado com sucesso!',
+          life: 3000,
+        });
 
-      onProdutoAdicionado(response.data);
-      setProduto({
-        nome: '',
-        preco: 0,
-        peso: 0,
-        pesoTipo: '',
-        descricao: '',
-        categoria: '',
-      });
-
-      onHide(); 
-
+        onProdutoAdicionado?.(response.data);
+        setProduto({
+          nome: '',
+          preco: 0,
+          peso: 0,
+          pesoTipo: '',
+          descricao: '',
+          categoria: '',
+        });
+        onHide?.();
+      } else {
+        throw new Error('Erro inesperado ao salvar produto.');
+      }
     } catch (error) {
+      console.error('Erro ao salvar produto:', error);
       toast.current.show({
         severity: 'error',
         summary: 'Erro ao salvar',
-        detail: error.response?.data?.message || 'Erro inesperado',
+        detail: error.response?.data?.message || error.message || 'Erro inesperado',
         life: 4000,
       });
     } finally {
