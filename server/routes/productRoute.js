@@ -7,6 +7,7 @@ const {
   CountAllProducts,
   getProductById,
   deleteProduct,
+  getEnums,
   updateProduct
 } = require("../controller/productController");
 
@@ -22,5 +23,7 @@ router.get("/allProducts", verifyToken, CountAllProducts);
 // Rotas públicas
 router.get("/products", getAllProducts);
 router.get("/product/:id", getProductById);
-router.get("/products/:nome", getProductByName)
+router.get("/products/:nome", getProductByName);
+router.get("/produt/types", getEnums);
+
 module.exports = router;

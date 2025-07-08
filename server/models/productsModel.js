@@ -52,5 +52,12 @@ productSchema.pre("findOneAndUpdate", function (next) {
     next();
 });
 
+productSchema.statics.getEnums = function () {
+  return {
+    pesoTipos: this.schema.path('pesoTipo').enumValues,
+    categorias: this.schema.path('categoria').enumValues
+  };
+};
+
 const product = mongoose.model("produtos", productSchema);
 module.exports = product;
