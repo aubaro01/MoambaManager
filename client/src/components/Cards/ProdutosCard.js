@@ -4,8 +4,8 @@ import { Button } from 'primereact/button';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
-import EditPrd from '../Form/Prd/editPrd';  
-import AddPrd from '../Form/Prd/addPrd';    
+import EditPrd from '../Form/Prd/editPrd';
+import AddPrd from '../Form/Prd/addPrd';
 import { api } from '../../services/api/api';
 
 const PrdCards = () => {
@@ -21,7 +21,7 @@ const PrdCards = () => {
     const fetchProdutos = async () => {
       setLoading(true);
       try {
-        const response = await api.get('/products'); 
+        const response = await api.get('/products');
         setProdutos(response.data.content || []);
       } catch (error) {
         toast.current.show({
@@ -90,11 +90,18 @@ const PrdCards = () => {
 
       <div className="flex justify-between items-center mb-5 gap-4">
         <h2 className="text-2xl font-semibold">Produtos</h2>
-        <Button label="Adicionar Produto" icon="pi pi-plus" onClick={abrirAdicionar} />
+        <Button
+          label="Adicionar Produto"
+          icon="pi pi-plus"
+          severity="success"
+          rounded
+          size="small"
+          onClick={abrirAdicionar}
+          className="p-button-sm"
+        />
       </div>
-
       {loading ? (
-        <p>Carregando produtos...</p>
+        <p>A carregar produtos...</p>
       ) : (
         <div className="grid grid-nogutter md:grid-cols-2 lg:grid-cols-3 gap-5">
           {produtos.length === 0 && <p>Nenhum produto encontrado.</p>}

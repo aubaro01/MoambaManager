@@ -8,7 +8,6 @@ const categorias = [
   { label: 'Alimentar', value: 'alimentar' },
   { label: 'Eletrônicos', value: 'eletronicos' },
   { label: 'Roupas', value: 'roupas' },
-  // Adicione mais categorias aqui
 ];
 
 export default function ProdutoForm({ produto, onChange }) {
