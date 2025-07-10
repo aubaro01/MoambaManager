@@ -11,6 +11,7 @@ import LandingPage from "./pages/landing";
 import Dashboard from "./pages/dashboard/home/dashboardHome";
 import Produtos from "./pages/dashboard/products/main";
 import Vendas from "./pages/dashboard/sells/main";
+import ErrorPage from './pages/errorPage';
 
 function App() {
   return (
@@ -18,18 +19,14 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          {<Route path="/dashboard" element={<Dashboard />} /> }
-            {/*<PrivateRoute>
+          {<Route path="/dashboard" element={
+            <PrivateRoute>
               <Dashboard />
             </PrivateRoute>
-          } />} */}
-          {<Route path="/dashboard/produtos" element={<Produtos />} /> }
-            {/* <PrivateRoute>
-              <Produtos />
-            </PrivateRoute>
-          } />}*/}
-          {<Route path="/dashboard/vendas" element={<Vendas /> } />}
-            {/* <PrivateRoute>
+          } />} 
+          {<Route path="/dashboard/produtos" element={<Produtos />} />}
+
+             {/* <PrivateRoute>
               <Vendas />
             </PrivateRoute>
           } />}*/}
@@ -38,7 +35,7 @@ function App() {
               <Vendas />
             </PrivateRoute>
           } />}*/}
-          {/* <Route path="*" element={<ErroPage />} /> */}
+           <Route path="*" element={<ErrorPage />} /> 
         </Routes>
       </Router>
     </PrimeReactProvider>

@@ -4,6 +4,7 @@ import { Button } from 'primereact/button';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
+import { Paginator } from 'primereact/paginator';
 import EditPrd from '../Form/Prd/editPrd';
 import AddPrd from '../Form/Prd/addPrd';
 import { api } from '../../services/api/api';
@@ -14,14 +15,22 @@ const PrdCards = ({ filtroNome }) => {
   const [produtoEditando, setProdutoEditando] = useState(null);
   const [modalEditVisivel, setModalEditVisivel] = useState(false);
   const [modalAddVisivel, setModalAddVisivel] = useState(false);
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const [paginacao, setPaginacao] = useState({
+    totalPages: 1,
+    totalElements: 0,
+    currentPage: 1,
+  });
+
   const toast = useRef(null);
 
   useEffect(() => {
     const fetchProdutos = async () => {
       setLoading(true);
       try {
-        const response = await api.get('/products');
+        const response = await api.get(`/products?page=${paginaAtual}`);
         setProdutos(response.data.content || []);
+        setPaginacao(response.data.page);
       } catch (error) {
         toast.current.show({
           severity: 'error',
@@ -35,7 +44,7 @@ const PrdCards = ({ filtroNome }) => {
     };
 
     fetchProdutos();
-  }, []);
+  }, [paginaAtual]);
 
   const abrirEdicao = (produto) => {
     setProdutoEditando({ ...produto });
@@ -47,36 +56,32 @@ const PrdCards = ({ filtroNome }) => {
     setProdutoEditando(null);
   };
 
-
-const salvarEdicao = async () => {
-  try {
-    const response = await api.put(`/product/${produtoEditando._id}`, produtoEditando); 
-
-    setProdutos((prev) =>
-      prev.map((p) => (p._id === produtoEditando._id ? response.data : p))
-    );
-    toast.current?.show({
-      severity: 'success',
-      summary: 'Produto atualizado',
-      detail: 'As alterações foram salvas com sucesso.',
-      life: 3000
-    });
-
-    fecharModalEdit();
-  } catch (error) {
-    toast.current?.show({
-      severity: 'error',
-      summary: 'Erro ao atualizar',
-      detail: error.response?.data?.message || 'Erro inesperado ao salvar',
-      life: 4000
-    });
-  }
-};
+  const salvarEdicao = async () => {
+    try {
+      const response = await api.put(`/product/${produtoEditando._id}`, produtoEditando);
+      setProdutos((prev) =>
+        prev.map((p) => (p._id === produtoEditando._id ? response.data : p))
+      );
+      toast.current?.show({
+        severity: 'success',
+        summary: 'Produto atualizado',
+        detail: 'As alterações foram salvas com sucesso.',
+        life: 3000
+      });
+      fecharModalEdit();
+    } catch (error) {
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Erro ao atualizar',
+        detail: error.response?.data?.message || 'Erro inesperado ao salvar',
+        life: 4000
+      });
+    }
+  };
 
   const handleProdutoChange = (produtoAtualizado) => {
     setProdutoEditando(produtoAtualizado);
   };
-
 
   const handleExcluir = (id) => {
     confirmDialog({
@@ -88,9 +93,7 @@ const salvarEdicao = async () => {
       accept: async () => {
         try {
           await api.delete(`/product/${id}`);
-
           setProdutos((prev) => prev.filter((p) => p._id !== id));
-
           toast.current?.show({
             severity: 'success',
             summary: 'Produto removido',
@@ -176,6 +179,17 @@ const salvarEdicao = async () => {
               </div>
             </Card>
           ))}
+        </div>
+      )}
+
+      {paginacao.totalPages > 1 && (
+        <div className="flex justify-content-center mt-4">
+          <Paginator
+            first={(paginaAtual - 1) * 10}
+            rows={10}
+            totalRecords={paginacao.totalElements}
+            onPageChange={(e) => setPaginaAtual(e.page + 1)}
+          />
         </div>
       )}
 
