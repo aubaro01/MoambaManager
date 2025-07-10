@@ -182,16 +182,13 @@ const PrdCards = ({ filtroNome }) => {
         </div>
       )}
 
-      {paginacao.totalPages > 1 && (
-        <div className="flex justify-content-center mt-4">
-          <Paginator
-            first={(paginaAtual - 1) * 5}
-            rows={10}
-            totalRecords={paginacao.totalElements}
-            onPageChange={(e) => setPaginaAtual(e.page + 1)}
-          />
-        </div>
-      )}
+      <Paginator
+        first={(paginacao.currentPage - 1) * 5}
+        rows={5}
+        totalRecords={paginacao.totalElements}
+        onPageChange={(e) => setPaginaAtual(e.page + 1)}
+      />
+
 
       <AddPrd
         visible={modalAddVisivel}
