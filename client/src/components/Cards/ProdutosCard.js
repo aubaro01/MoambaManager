@@ -28,7 +28,7 @@ const PrdCards = ({ filtroNome }) => {
     const fetchProdutos = async () => {
       setLoading(true);
       try {
-        const response = await api.get(`/products?page=${paginaAtual}`);
+        const response = await api.get(`/products?page=${paginaAtual}&size=5`);
         setProdutos(response.data.content || []);
         setPaginacao(response.data.page);
       } catch (error) {
