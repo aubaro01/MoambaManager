@@ -24,11 +24,12 @@ function App() {
               <Dashboard />
             </PrivateRoute>
           } />} 
-          {<Route path="/dashboard/produtos" element={
-             <PrivateRoute>
-              <Produtos />
+          {<Route path="/dashboard/produtos" element={<Produtos />} />}
+
+             {/* <PrivateRoute>
+              <Vendas />
             </PrivateRoute>
-          } />}
+          } />}*/}
           {<Route path="/dashboard/vendas" element={<Vendas /> } />}
             {/* <PrivateRoute>
               <Vendas />
