@@ -174,7 +174,8 @@ const PrdCards = ({ filtroNome }) => {
               }
             >
               <div className="text-sm text-gray-700">
-                <p><strong>Descrição:</strong> {produto.descricao}</p>
+                <p><strong>Descrição:</strong></p>
+                <p>{produto.descricao}</p>
                 <p><strong>Peso:</strong> {produto.peso} {produto.pesoTipo}</p>
               </div>
             </Card>
