@@ -4,7 +4,7 @@ const Sells = require('../models/sellsModel');
 const Product = require('../models/productsModel');
 const sellsController = require('../controller/sellController');
 
-const verifyToken = require('../middlewares/authMiddleware');
+const {verifyToken} = require('../middlewares/authMiddleware');
 
 router.post('/sells', verifyToken, sellsController.createSell);
 

@@ -32,7 +32,7 @@ const login = async (req, res) => {
             return res.status(401).json({ message: "Utilizador não encontrado." });
         }
 
-        console.log(' Utilizador encontrado:', user);
+        console.log(' Utilizador encontrado:', user.logName);
 
         if (typeof user.comparePassword !== 'function') {
             console.error(' comparePassword não está definido no modelo User.');
@@ -51,21 +51,30 @@ const login = async (req, res) => {
             { expiresIn: process.env.JWT_EXPIRES_IN || '1h' }
         );
 
-        console.log(' Token JWT gerado com sucesso.');
+        const refreshToken = jwt.sign(
+            { id: user._id, logName: user.logName, id_token: token },
+            process.env.JWT_REFRESH,
+            { expiresIn: process.env.JWT_REFRESH_IN || '7d' }
+        )
+
+        console.log('Token JWT gerado com sucesso.');
 
         res.status(200).json({
-            message: "Login bem-sucedido!",
-            token,
             user: {
                 nome: user.nome,
-            }
+                loginName: user.logName
+            },
+            message: "Login bem-sucedido!",
+            token,
+            refreshToken
         });
     } catch (err) {
         console.error('Erro durante o login:', err);
         res.status(500).json({ error: "Erro no login.", details: err.message });
     }
 };
+
 module.exports = {
     register,
-    login,
+    login
 };
