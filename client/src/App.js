@@ -20,10 +20,10 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           {<Route path="/dashboard" element={
-            <PrivateRoute>
+             <PrivateRoute>
               <Dashboard />
             </PrivateRoute>
-          } />} 
+          } />}
           {<Route path="/dashboard/produtos" element={<Produtos />} />}
 
              {/* <PrivateRoute>

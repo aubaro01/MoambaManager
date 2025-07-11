@@ -95,7 +95,7 @@ export default function MonthlyGoalsCard() {
             />
             <p
               style={{
-                fontSize: '3.5rem',
+                fontSize: '2.5rem',
                 fontWeight: '700',
                 color: '#4F46E5',
                 margin: 0,

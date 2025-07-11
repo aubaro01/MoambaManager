@@ -5,6 +5,7 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import { Paginator } from 'primereact/paginator';
+import { Skeleton } from 'primereact/skeleton';
 import EditPrd from '../Form/Prd/editPrd';
 import AddPrd from '../Form/Prd/addPrd';
 import { api } from '../../services/api/api';
@@ -143,7 +144,24 @@ const PrdCards = ({ filtroNome }) => {
       </div>
 
       {loading ? (
-        <p>A carregar produtos...</p>
+        <div className="grid grid-nogutter md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {[...Array(5)].map((_, i) => (
+            <div
+              key={i}
+              className="p-3 border-round-md shadow-2"
+              style={{ minHeight: '180px' }}
+              aria-label="Carregando produto"
+            >
+              <Skeleton width="60%" height="1.5rem" className="mb-3" />
+              <Skeleton width="40%" height="1rem" className="mb-4" />
+              <Skeleton width="100%" height="3rem" className="mb-3" />
+              <div className="flex gap-2">
+                <Skeleton width="2rem" height="2rem" shape="circle" />
+                <Skeleton width="2rem" height="2rem" shape="circle" />
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
         <div className="grid grid-nogutter md:grid-cols-2 lg:grid-cols-3 gap-5">
           {produtosFiltrados.length === 0 && <p>Nenhum produto encontrado.</p>}
@@ -163,11 +181,13 @@ const PrdCards = ({ filtroNome }) => {
                       icon="pi pi-pencil"
                       className="p-button-sm p-button-warning"
                       onClick={() => abrirEdicao(produto)}
+                      aria-label={`Editar produto ${produto.nome}`}
                     />
                     <Button
                       icon="pi pi-trash"
                       className="p-button-sm p-button-danger"
                       onClick={() => handleExcluir(produto._id)}
+                      aria-label={`Eliminar produto ${produto.nome}`}
                     />
                   </div>
                 </div>
@@ -189,7 +209,6 @@ const PrdCards = ({ filtroNome }) => {
         totalRecords={paginacao.totalElements}
         onPageChange={(e) => setPaginaAtual(e.page + 1)}
       />
-
 
       <AddPrd
         visible={modalAddVisivel}
