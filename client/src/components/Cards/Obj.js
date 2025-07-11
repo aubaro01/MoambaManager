@@ -13,11 +13,16 @@ export default function MonthlyGoalsCard() {
       setLoading(true);
       try {
         const response = await api.get('/objetivo');
-        setMonthlySales(response.data.monthlySalesGoal);
+        const valor = Number(response.data.valor);
+        const valorFormatado = valor.toLocaleString('pt-PT', {
+          style: 'currency',
+          currency: 'EUR',
+        });
+        setMonthlySales(valorFormatado);
       } catch (error) {
         toast.current.show({
           severity: 'error',
-          summary: 'Erro ao buscar por mensais',
+          summary: 'Erro ao buscar por metas mensais',
           detail: error.response?.data?.message || error.message,
           life: 3000,
         });
@@ -47,7 +52,12 @@ export default function MonthlyGoalsCard() {
         {loading ? (
           <div
             aria-label="A carregar vendas mensais"
-            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 100 }}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 100,
+            }}
           >
             <i className="pi pi-spin pi-bullseye" style={{ fontSize: '3rem', color: '#6366F1' }} />
           </div>
@@ -71,7 +81,15 @@ export default function MonthlyGoalsCard() {
             >
               {monthlySales !== null ? monthlySales : '—'}
             </p>
-            <p style={{ fontSize: '1rem', color: '#6B7280', marginTop: '-0.2rem', fontWeight: 500 }}>
+            <p
+              style={{
+                fontSize: '1rem',
+                color: '#6B7280',
+                marginTop: '-0.2rem',
+                fontWeight: 500,
+              }}
+            >
+              Meta para {new Date().toLocaleDateString('pt-PT', { month: 'long', year: 'numeric' })}
             </p>
           </div>
         )}
