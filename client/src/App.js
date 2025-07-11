@@ -20,22 +20,21 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           {<Route path="/dashboard" element={
-             <PrivateRoute>
+            <PrivateRoute>
               <Dashboard />
             </PrivateRoute>
           } />}
-          {<Route path="/dashboard/produtos" element={<Produtos />} />}
-
-             {/* <PrivateRoute>
+          {<Route path="/dashboard/produtos" element={
+            <PrivateRoute>
+              <Produtos />
+            </PrivateRoute>
+          } />}
+          {<Route path="/dashboard/vendas" element={<Vendas />} />}
+          {/* <PrivateRoute>
               <Vendas />
             </PrivateRoute>
           } />}*/}
-          {<Route path="/dashboard/vendas" element={<Vendas /> } />}
-            {/* <PrivateRoute>
-              <Vendas />
-            </PrivateRoute>
-          } />}*/}
-           <Route path="*" element={<ErrorPage />} /> 
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
     </PrimeReactProvider>
