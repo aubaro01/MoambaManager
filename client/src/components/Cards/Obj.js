@@ -13,16 +13,28 @@ export default function MonthlyGoalsCard() {
       setLoading(true);
       try {
         const response = await api.get('/objetivo');
-        const valor = Number(response.data.valor);
-        const valorFormatado = valor.toLocaleString('pt-PT', {
+        const rawValue = response.data.valor;
+
+        const cleanedValue = typeof rawValue === 'string'
+          ? rawValue.replace(/[^\d.-]/g, '')
+          : rawValue;
+
+        const numericValue = parseFloat(cleanedValue);
+
+        if (isNaN(numericValue)) {
+          throw new Error('Valor inválido recebido da API.');
+        }
+
+        const valorFormatado = numericValue.toLocaleString('pt-PT', {
           style: 'currency',
           currency: 'EUR',
         });
+
         setMonthlySales(valorFormatado);
       } catch (error) {
         toast.current.show({
           severity: 'error',
-          summary: 'Erro ao buscar por metas mensais',
+          summary: 'Erro ao buscar por meta mensal',
           detail: error.response?.data?.message || error.message,
           life: 3000,
         });
@@ -38,7 +50,7 @@ export default function MonthlyGoalsCard() {
     <>
       <Toast ref={toast} />
       <Card
-        title="Vendas Mensais"
+        title="Meta Mensal"
         className="mb-4"
         style={{
           borderRadius: 12,
@@ -51,7 +63,7 @@ export default function MonthlyGoalsCard() {
       >
         {loading ? (
           <div
-            aria-label="A carregar vendas mensais"
+            aria-label="A carregar meta mensal"
             style={{
               display: 'flex',
               justifyContent: 'center',
