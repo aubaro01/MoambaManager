@@ -17,7 +17,7 @@ const LoginForm = () => {
   const onLogin = async (logName, password) => {
     setLoading(true);
     try {
-      const response = await api.post('/user/login', { logName, password });
+      const response = await api.post('/user/auth/login', { logName, password });
 
       if (response.status === 200) {
         const { token } = response.data;
