@@ -11,7 +11,7 @@ const {
   updateProduct
 } = require("../controller/productController");
 
-const verifyToken = require("../middlewares/authMiddleware");
+const {verifyToken} = require("../middlewares/authMiddleware");
 
 // Rotas protegidas
 router.post("/product", verifyToken, createProduct);

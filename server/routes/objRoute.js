@@ -3,7 +3,7 @@ const router = express.Router();
 const {criarObjetivo, listarObjetivos, getObjetivoPorMes, atualizarObjetivo, deletarObjetivo} 
 = require("../controller/objController");
 
-const verifyToken = require("../middlewares/authMiddleware");
+const {verifyToken} = require("../middlewares/authMiddleware");
  
 router.post("/objetivo", verifyToken, criarObjetivo);
 router.get("/objetivos", verifyToken, listarObjetivos);
