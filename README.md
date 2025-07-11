@@ -76,13 +76,13 @@ Resposta
 
 ``` 
 {
-    "message": "Login bem-sucedido!",
-    "token": "token",
     "user": {
-        "id": "id",
-        "nome": "nome",
-        "logName": "Teste12"
-    }
+        "nome": "Silas",
+        "loginName": "Teste12"
+    },
+    "message": "Login bem-sucedido!",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWQxNTgyNTMyZjlkYWI2NzNjMzhhNCIsImxvZ05hbWUiOiJUZXN0ZTEyIiwiaWF0IjoxNzUyMjM2NDk1LCJleHAiOjE3NTIyNDAwOTV9.hL4soRRAmP405HsL_dOKnTiPoDxpaCrW4HOLuD-l0yM",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWQxNTgyNTMyZjlkYWI2NzNjMzhhNCIsImxvZ05hbWUiOiJUZXN0ZTEyIiwiaWRfdG9rZW4iOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJalk0TldReE5UZ3lOVE15Wmpsa1lXSTJOek5qTXpoaE5DSXNJbXh2WjA1aGJXVWlPaUpVWlhOMFpURXlJaXdpYVdGMElqb3hOelV5TWpNMk5EazFMQ0psZUhBaU9qRTNOVEl5TkRBd09UVjkuaEw0c29SUkFtUDQwNUhzTF9kT0tuVGlQb0R4cGFDclc0SE9MdUQtbDB5TSIsImlhdCI6MTc1MjIzNjQ5NSwiZXhwIjoxNzUyODQxMjk1fQ.eMr7a50V6e1B0Ft2tE7GU31i5MsztPKQSZcn5EcnY60"
 }
 ```
 
