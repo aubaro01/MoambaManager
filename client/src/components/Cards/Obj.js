@@ -14,6 +14,7 @@ export default function MonthlyGoalsCard() {
       try {
         const response = await api.get('/objetivo');
         const rawValue = response.data.valor;
+        console.log('Valor recebido da API:', response.data.valor);
 
         const cleanedValue = typeof rawValue === 'string'
           ? rawValue.replace(/[^\d.-]/g, '')
