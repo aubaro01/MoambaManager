@@ -16,13 +16,7 @@ export default function MonthlyGoalsCard() {
 
         console.log('Resposta completa da API:', response.data);
 
-        let rawValue = null;
-
-        if (Array.isArray(response.data)) {
-          rawValue = response.data[0]?.valor;
-        } else {
-          rawValue = response.data?.valor;
-        }
+        const rawValue = response.data?.content?.[0]?.valor;
 
         if (!rawValue) {
           throw new Error('Valor não encontrado na resposta da API.');
@@ -31,8 +25,8 @@ export default function MonthlyGoalsCard() {
         let cleanedValue = rawValue;
         if (typeof rawValue === 'string') {
           cleanedValue = rawValue
-            .replace(/\./g, '') // remove pontos (milhar)
-            .replace(',', '.'); // troca vírgula decimal por ponto
+            .replace(/\./g, '') 
+            .replace(',', '.');
         }
 
         const numericValue = parseFloat(cleanedValue);
