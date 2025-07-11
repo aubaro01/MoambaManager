@@ -74,7 +74,7 @@ Resposta
 
 #### Resposta
 
-``` json
+``` 
 {
     "message": "Login bem-sucedido!",
     "token": "token",
@@ -86,9 +86,26 @@ Resposta
 }
 ```
 
+#### Refresh do token do user na app
 
-router.post("/user/auth/login", login);
+```http
+  Post /user/auth/refresh
 
+```
+
+| Campo    | Tipo   | Descrição                  | Obrigatório |
+| -------- | ------ | -------------------------- | ----------- |
+| **`token`**  | string | Token de login do user na app | Sim         |
+| **`refreshToken`** | string | Refresh token do user na app     | Sim         |
+
+
+#### Resposta
+
+``` 
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWQxNTgyNTMyZjlkYWI2NzNjMzhhNCIsImlhdCI6MTc1MjIzNjA5MywiZXhwIjoxNzUyMjM5NjkzfQ.JmmmAvsH4hCzas6ad3CxwgFiotJ4woMftjNpAm9zrBE"
+}
+```
 
 #### Inserir produtos
 
