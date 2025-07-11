@@ -54,7 +54,8 @@ Resposta
 #### Login do user na app
 
 ```http
-  Post /user/login
+  Post /user/auth/login
+
 ```
 
 | Campo    | Tipo   | Descrição                  | Obrigatório |
@@ -84,6 +85,9 @@ Resposta
     }
 }
 ```
+
+
+router.post("/user/auth/login", login);
 
 
 #### Inserir produtos
