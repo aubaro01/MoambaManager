@@ -97,7 +97,7 @@ const LoginForm = () => {
             </div>
           </div>
 
-          <div className="flex flex-column gap-2">
+          <div className="flex flex-column gap-4">
             <label htmlFor="password" className="font-medium text-700">Password</label>
             <div className="p-inputgroup">
               <span className="p-inputgroup-addon">
@@ -105,11 +105,12 @@ const LoginForm = () => {
               </span>
               <Password
                 id="password"
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 feedback={false}
                 toggleMask
-                placeholder="Sua password"
+                placeholder="A sua password"
                 required
                 inputClassName="w-full"
                 inputStyle={{ border: 'none', borderBottom: '1px solid #ced4da' }}

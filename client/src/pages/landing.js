@@ -33,7 +33,7 @@ const AboutDialog = ({ visible, onHide }) => (
   >
     <p className="m-0">
       O <strong>Moamba Manager</strong> é uma plataforma para gerenciamento de negócios.
-      Desenvolvido com foco em segurança, desempenho e usabilidade.
+      Desenvolvido com foco em segurança, desempenho e usabilidade. Um projeto de teste 
     </p>
   </Dialog>
 );
